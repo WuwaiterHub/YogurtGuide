@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="隱私權" description="YogurtGuide 網站與 App 的隱私權宣告，含 Google Drive 備份與 Apple 上架後沿用的資料說明。">
+	<section class="section">
+		<div class="wrap">
+			<h1 class="page-title">隱私權<span class="en-sub">Privacy</span></h1>
+			<p class="page-lead">生效日 2026-10-20。網站與日後的 Android App 都用這一份。</p>
+			<article class="prose">
+				<h2>經營者</h2>
+				<p>
+					YogurtGuide 經營 <a href="https://yogurtguide.wuwaiter.com/">https://yogurtguide.wuwaiter.com/</a>。
+					聯絡請用 <a href="https://www.instagram.com/yogurtguide">Instagram @yogurtguide</a>。
+				</p>
+
+				<h2>網站</h2>
+				<p>網站是靜態內容，沒有帳號，不收集個人資料，也不放第三方分析腳本。</p>
+
+				<h2>Android App 存在手機裡的資料</h2>
+				<p>App 上架後，優格紀錄、照片和收藏只存在那支手機。不登入也能使用這些功能。刪除方式是 App 裡的「刪除全部資料」。</p>
+
+				<h2>Google Drive</h2>
+				<p>Google 登入是可選的，只為了把紀錄備份到你自己的雲端硬碟。權限只有 <code>drive.appdata</code>，App 讀不到雲端硬碟裡的其他檔案。</p>
+				<p>
+					紀錄與照片只在你和你自己的 Drive 之間。YogurtGuide 的伺服器收不到這些內容。此使用方式遵守
+					<a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>
+					的 Limited Use：不用於廣告、不出售、不轉作備份以外的用途。
+				</p>
+				<p>停止備份有兩條路：在 App 裡刪除 Drive 上的備份，或到 Google 帳戶的第三方存取權撤銷 YogurtGuide。</p>
+
+				<h2>Apple</h2>
+				<p>
+					iOS 版上架後，資料種類與 Android 相同：本機的優格紀錄、照片、收藏，以及可選的 Google Drive 備份。不做跨 App 追蹤，不使用廣告識別碼。App Store 的隱私權網址也是這一頁。
+				</p>
+			</article>
+		</div>
+	</section>
+</BaseLayout>

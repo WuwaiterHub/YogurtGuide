@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const powders = (await getCollection('starterPowders', ({ data }) => !data.draft)).sort(
+	(a, b) => a.data.sortOrder - b.data.sortOrder,
+);
+
+const brands: { slug: string; name: string }[] = [];
+const byBrand = new Map<string, typeof powders>();
+for (const item of powders) {
+	const { brandSlug, brand } = item.data;
+	if (!byBrand.has(brandSlug)) {
+		brands.push({ slug: brandSlug, name: brand });
+		byBrand.set(brandSlug, []);
+	}
+	byBrand.get(brandSlug)?.push(item);
+}
+
+const brandNote: Record<string, string> = {
+	jarou: '優格菌四款。',
+	bhk: '這裡只收發酵用的手作優格粉。',
+	bubu: '這次只列鮮奶優格菌粉。',
+	chuanxiu: '同一菌的不同包數併成一列。',
+	yobite: '500、200 這類數字是活菌數。',
+	angel: '百鑽是安琪的消費品牌。',
+	baisheng: '納豆菌粉不是優格菌，列在最後。',
+};
+
+function packUnit(unit: string) {
+	if (!unit) return '';
+	if (/標價|規格|彙整|像|混雜|未|條數/.test(unit)) return '';
+	if (!/包|盒|瓶|袋/.test(unit)) return '';
+	return unit;
+}
+
+function money(data: (typeof powders)[number]['data']) {
+	if (!data.priceAmount || !data.priceCurrency) return '沒有價格資訊';
+	const symbol = data.priceCurrency === 'TWD' ? 'NT$' : 'CN¥';
+	const unit = packUnit(data.priceUnit);
+	const amount = unit ? `${symbol}${data.priceAmount}／${unit}` : `${symbol}${data.priceAmount}`;
+	return `${amount} · ${data.priceAsOf}`;
+}
+
+function strainLine(strains: { name: string; code?: string }[]) {
+	if (strains.length === 0) return '沒有菌種資訊';
+	return strains.map((strain) => (strain.code ? `${strain.name} ${strain.code}` : strain.name)).join(', ');
+}
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="菌粉" description="家酪優、BHK、布布優格、川秀、優比特、安琪百鑽、佰生優的發酵菌粉：菌種、包裝、標價與評價。">
+	<section class="section">
+		<div class="wrap">
+			<h1 class="page-title">菌粉<span class="en-sub">Starter Powders</span></h1>
+			<p class="page-lead">七個品牌、這次搜得到的發酵菌粉。價格只寫金額、幣別、單位和日期。</p>
+			<ul class="powder-jump">
+				{
+					brands.map((brand) => (
+						<li>
+							<a href={`#${brand.slug}`}>
+								{brand.name}（{byBrand.get(brand.slug)?.length}）
+							</a>
+						</li>
+					))
+				}
+			</ul>
+
+			{
+				brands.map((brand) => (
+					<section class="record-block" id={brand.slug}>
+						<h2 class="record-block__title">{brand.name}</h2>
+						<p class="meta">{brandNote[brand.slug]}</p>
+						{
+							byBrand.get(brand.slug)?.map(({ id, data }) => (
+								<article class="market-card" id={id}>
+									<h3 class="market-card__title">
+										{data.brand} {data.productName}
+									</h3>
+									<div class="powder-shots">
+										<figure class:list={['powder-shot', { 'powder-shot--empty': !data.packImage }]}>
+											{data.packImage ? (
+												<img src={`${base}${data.packImage}`} alt={`${data.brand} ${data.productName} 包裝`} />
+											) : (
+												<p>本輪未取得包裝圖</p>
+											)}
+											<figcaption>{data.packCaption ?? '包裝'}</figcaption>
+										</figure>
+										<figure class="powder-shot">
+											<p class="powder-strain-line">{strainLine(data.strains)}</p>
+											<figcaption>菌種</figcaption>
+										</figure>
+									</div>
+									<table class="meta-table">
+										<tbody>
+											<tr>
+												<th>規格</th>
+												<td>{data.spec}</td>
+											</tr>
+											<tr>
+												<th>價格</th>
+												<td>{money(data)}</td>
+											</tr>
+											<tr>
+												<th>評價</th>
+												<td>{data.reviewTier === 'none' ? '沒有評價資訊' : data.review}</td>
+											</tr>
+										</tbody>
+									</table>
+								</article>
+							))
+						}
+					</section>
+				))
+			}
+		</div>
+	</section>
+</BaseLayout>

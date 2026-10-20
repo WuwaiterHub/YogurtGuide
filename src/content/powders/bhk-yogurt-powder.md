@@ -1,0 +1,36 @@
+---
+brand: "BHK"
+brandSlug: "bhk"
+productName: "100%手作優格粉"
+channels:
+  - "shopee"
+spec: "2 公克 × 15 包／袋。官方建議約 250 毫升溫鮮奶、密封 6–12 小時。成分另有菊糖與玉米來源可溶性纖維。"
+strains:
+  - name: "植物乳桿菌"
+  - name: "乳雙歧桿菌"
+  - name: "短雙歧桿菌"
+  - name: "乾酪乳桿菌"
+  - name: "副乾酪乳桿菌"
+  - name: "醱酵乳桿菌"
+  - name: "鼠李糖乳桿菌"
+  - name: "嗜熱鏈球菌"
+  - name: "凝乳芽孢桿菌"
+  - name: "嗜酸乳桿菌"
+  - name: "長雙歧桿菌"
+  - name: "兩歧雙歧桿菌"
+  - name: "乳酸乳桿菌"
+  - name: "羅伊氏乳桿菌"
+  - name: "瑞士乳桿菌"
+  - name: "保加利亞乳桿菌"
+strainGap: "沒有各株保存編號。15 合 1 的複方代號是 Synpro-15G。優格發酵菌的複方代號是 YO-Mix 499，裡面是嗜熱鏈球菌與保加利亞乳桿菌。官方有一版把嗜熱鏈球菌算兩次，寫成 17 種。"
+priceAmount: "199"
+priceCurrency: "TWD"
+priceUnit: "15包／袋"
+priceOrigin: "shopee"
+priceAsOf: "2026-10-20"
+priceNote: "比價頁仍寫蝦皮商城 NT$199。同月另有賣場顯示已停售。"
+reviewTier: "official"
+review: "官方問答寫每包檢測 6 億以上，發酵後一杯可到 85 億以上。這是官方數字。這次沒有獨立評測。"
+sortOrder: 110
+draft: false
+---

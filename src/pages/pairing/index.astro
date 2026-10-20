@@ -1,6 +1,23 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+
+const recipeEntries = (await getCollection('overnightOats', ({ data }) => !data.draft)).sort((a, b) =>
+	a.data.title.localeCompare(b.data.title, 'zh-Hant'),
+);
+const recipes = await Promise.all(
+	recipeEntries.map(async (entry) => ({ entry, Content: (await render(entry)).Content })),
+);
+
+function refId(ref: { id: string } | string | undefined) {
+	if (!ref) return undefined;
+	return typeof ref === 'string' ? ref : ref.id;
+}
+
+function totalGrams(ingredients: { amount: number; unit: 'g' | 'ml' }[]) {
+	if (!ingredients.every((item) => item.unit === 'g')) return null;
+	return ingredients.reduce((sum, item) => sum + item.amount, 0);
+}
 
 const singles = [
 	{
@@ -53,16 +70,8 @@ const combos = [
 		group: '高纖維',
 		items: [
 			{
-				name: '高纖膨脹',
-				body: '一般無糖優格＋奇亞籽 1 匙＋全穀燕麥片（或少量低糖 Granola）＋蜂蜜。較稀的優格讓奇亞籽吸水膨脹；燕麥補纖維與飽足。要酥脆用 Granola 現撒、不要久泡。',
-			},
-			{
 				name: '高纖亞麻籽',
 				body: '一般無糖優格＋熟亞麻籽粉 1 匙＋熟黑芝麻粒。粉會吸水、質地略濃，補油脂與纖維。',
-			},
-			{
-				name: '燕麥隔夜感',
-				body: '較稀的無糖優格＋生燕麥片靜置 10–20 分鐘（或隔夜）再吃。燕麥會變軟、纖維感明顯；冷泡溶出黏性纖維的效率低於熱煮成粥。要酥脆則改撒低糖低油 Granola、不要久泡。',
 			},
 		],
 	},
@@ -112,14 +121,82 @@ const additives = (await getCollection('additives', ({ data }) => !data.draft)).
 const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="搭配" description="優格原型食材、益生元與搭配組合：高蛋白、高纖維與益生質纖維。">
+<BaseLayout title="搭配" description="隔夜燕麥優格食譜：每項食材都有重量。另有原型食材、益生元與其他吃法。">
 	<section class="section">
 		<div class="wrap">
 			<h1 class="page-title">搭配<span class="en-sub">Pairing</span></h1>
-			<p class="meta">整理自公開搭配文與食譜</p>
+			<p class="page-lead">隔夜燕麥優格是主體。每項食材都寫克數或毫升。</p>
+
+			<section class="record-block" id="overnight-oats">
+				<h2 class="record-block__title">1. 隔夜燕麥優格<span class="en-sub">Overnight oats</span></h2>
+				{
+					recipes.map(({ entry, Content }) => {
+						const data = entry.data;
+						const grams = totalGrams(data.ingredients);
+						return (
+							<article class="pairing-group">
+								<h3 class="pairing-group__title">
+									{data.title}
+									<span class="en-sub">
+										{data.servings} 人份 · 冷藏 {data.soakHours} 小時
+									</span>
+								</h3>
+								<p class="meta">{data.texture}</p>
+								<table class="meta-table">
+									<thead>
+										<tr>
+											<th>食材</th>
+											<th>重量</th>
+											<th>×2</th>
+										</tr>
+									</thead>
+									<tbody>
+										{data.ingredients.map((item) => {
+											const foodId = refId(item.foodRef);
+											return (
+												<tr>
+													<td>
+														{foodId ? (
+															<a href={`${base}pairing/foods/${foodId}/`}>{item.name}</a>
+														) : (
+															item.name
+														)}
+														{item.note ? <span class="meta"> {item.note}</span> : null}
+													</td>
+													<td>
+														{item.amount} {item.unit}
+													</td>
+													<td>
+														{item.amount * 2} {item.unit}
+													</td>
+												</tr>
+											);
+										})}
+										{grams !== null && (
+											<tr>
+												<th>合計</th>
+												<td>{grams} g</td>
+												<td>{grams * 2} g</td>
+											</tr>
+										)}
+									</tbody>
+								</table>
+								<ol>
+									{data.steps.map((step) => (
+										<li>{step}</li>
+									))}
+								</ol>
+								<div class="prose">
+									<Content />
+								</div>
+							</article>
+						);
+					})
+				}
+			</section>
 
 			<section class="record-block" id="singles">
-				<h2 class="record-block__title">1. 原型食材<span class="en-sub">Whole foods</span></h2>
+				<h2 class="record-block__title">2. 食材說明<span class="en-sub">Whole foods</span></h2>
 				{
 					singles.map((group) => (
 						<div class="pairing-group">
@@ -153,7 +230,7 @@ const base = import.meta.env.BASE_URL;
 			</section>
 
 			<section class="record-block" id="prebiotics">
-				<h2 class="record-block__title">2. 益生元<span class="en-sub">Prebiotics</span></h2>
+				<h2 class="record-block__title">3. 益生元<span class="en-sub">Prebiotics</span></h2>
 				<div class="pairing-group">
 					<ul class="list">
 						{
@@ -174,7 +251,7 @@ const base = import.meta.env.BASE_URL;
 			</section>
 
 			<section class="record-block" id="combos">
-				<h2 class="record-block__title">3. 搭配組合<span class="en-sub">Combinations</span></h2>
+				<h2 class="record-block__title">4. 其他吃法<span class="en-sub">Other combinations</span></h2>
 				{
 					combos.map((group) => (
 						<div class="pairing-group">

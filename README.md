@@ -15,6 +15,7 @@
 | `src/content/batches/*.md` | 批次實驗 |
 | `src/content/glossary/*.md` | 詞彙 |
 | `src/content/market-yogurts/*.md` | 市售優格 |
+| `src/content/powders/*.md` | 發酵菌粉 |
 | `src/content/additives/*.md`、`src/content/foods/*.md` | 添加物與搭配食物 |
 | `src/data/numbered-strains.ts` | 編號菌株 |
 

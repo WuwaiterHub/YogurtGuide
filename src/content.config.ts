@@ -130,4 +130,70 @@ const marketYogurts = defineCollection({
 	}),
 });
 
-export const collections = { cultures, methods, batches, additives, foods, glossary, marketYogurts };
+const starterPowders = defineCollection({
+	loader: glob({ base: './src/content/powders', pattern: '**/*.md' }),
+	schema: z.object({
+		brand: z.string(),
+		brandSlug: z.string(),
+		productName: z.string(),
+		channels: z.array(z.enum(['shopee', 'taobao'])).default([]),
+		spec: z.string(),
+		strains: z
+			.array(
+				z.object({
+					name: z.string(),
+					code: z.string().optional(),
+				}),
+			)
+			.default([]),
+		strainGap: z.string().optional(),
+		priceAmount: z.string().default(''),
+		priceCurrency: z.enum(['TWD', 'CNY']).optional(),
+		priceUnit: z.string().default(''),
+		priceOrigin: z.enum(['shopee', 'taobao', 'official', 'other']).optional(),
+		priceAsOf: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+		priceNote: z.string().optional(),
+		reviewTier: z.enum(['web', 'video', 'xhs', 'buyer', 'official', 'none']),
+		review: z.string(),
+		packImage: z.string().optional(),
+		packCaption: z.string().optional(),
+		sortOrder: z.number().default(100),
+		draft: z.boolean().default(false),
+	}),
+});
+
+const overnightOats = defineCollection({
+	loader: glob({ base: './src/content/overnight-oats', pattern: '**/*.md' }),
+	schema: z.object({
+		title: z.string(),
+		servings: z.number().int().positive(),
+		soakHours: z.number().positive(),
+		texture: z.string(),
+		ingredients: z
+			.array(
+				z.object({
+					name: z.string(),
+					amount: z.number().positive(),
+					unit: z.enum(['g', 'ml']),
+					foodRef: reference('foods').optional(),
+					additiveRef: reference('additives').optional(),
+					note: z.string().optional(),
+				}),
+			)
+			.min(2),
+		steps: z.array(z.string()).min(1),
+		draft: z.boolean().default(false),
+	}),
+});
+
+export const collections = {
+	cultures,
+	methods,
+	batches,
+	additives,
+	foods,
+	glossary,
+	marketYogurts,
+	starterPowders,
+	overnightOats,
+};

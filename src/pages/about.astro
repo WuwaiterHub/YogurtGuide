@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="關於" description="YogurtGuide 的定位與紀錄方法。">
@@ -32,6 +34,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 				</ul>
 
 
+				<p>
+					<a href={`${base}privacy/`}>隱私權宣告</a>說明網站不收集個人資料，以及 App 上架後的本機紀錄與 Google Drive 備份。
+				</p>
 				<h2>最後的說明</h2>
 				<ul>
 					<li>很多人會接觸優格，無非就是為了健康</li>

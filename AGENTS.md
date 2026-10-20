@@ -29,7 +29,3 @@ Cloudflare 建置設了 `WORKERS_CI=1` 時，`base` 是 `/`。
 頁面讀 `src/content/**/*.md`。改這些檔之後執行 `npm run build`。
 
 批次來源是 `src/content/batches/*.md`。`npm run batch:sqlite` 只從 Markdown 重建 `data/*.sqlite`。頁面不讀 SQLite。
-
-## Skills
-
-`.agents/skills` 連到 `D:\WadeDev\.ai\.skills`。這裡的修改會影響其他專案。不要把 YogurtGuide 專用名稱寫進共用 skill。
