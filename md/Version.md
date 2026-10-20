@@ -1,5 +1,16 @@
 # Version History
 
+## v0.11.2 — 2026-10-20
+
+### Changes
+- 移除批次欄位 `scoreReproducibility` 與 `scoreSatisfaction`。凝乳、口感、酸度仍用 `resultSet`、`resultTexture`、`resultAcidity`。
+
+## v0.11.1 — 2026-10-20
+
+### Changes
+- `AGENTS.md` 補上菌粉頁、隔夜燕麥、`app-content/v1` 與這一期只做網站的規則。
+- 隔夜燕麥食材單位改為 `g`、`ml`、`顆`、`湯匙`。缺數量時建置仍會失敗。
+
 ## v0.11.0 — 2026-10-20
 
 ### Changes

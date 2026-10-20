@@ -17,8 +17,6 @@ resultTexture: "勺起可斷面，偏細緻，但表面不夠光滑"
 resultWhey: "表面少量乳清"
 resultFlavor: "典型優格酸香，略帶乳脂"
 resultOverall: "凝乳完整但略過頭，已有乳清析出；酸度中等可接受。微波爐＋熱水碗保溫約 32°C、發酵 11 h。製法不變，下次縮短發酵時間。"
-scoreReproducibility: 3
-scoreSatisfaction: 3
 photoAlbumUrl: "https://photos.app.goo.gl/JuT2GeDxGeWpdomt5"
 photos: ["batches/b001/01.jpg"]
 draft: false

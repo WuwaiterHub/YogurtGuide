@@ -72,8 +72,6 @@ const batches = defineCollection({
 		resultWhey: z.string().optional(),
 		resultFlavor: z.string().optional(),
 		resultOverall: z.string().optional(),
-		scoreReproducibility: z.number().int().min(1).max(5).optional(),
-		scoreSatisfaction: z.number().int().min(1).max(5).optional(),
 		photoAlbumUrl: z.string().url().optional(),
 		photos: z.array(z.string()).default([]),
 		draft: z.boolean().default(false),
@@ -174,7 +172,7 @@ const overnightOats = defineCollection({
 				z.object({
 					name: z.string(),
 					amount: z.number().positive(),
-					unit: z.enum(['g', 'ml']),
+					unit: z.enum(['g', 'ml', '顆', '湯匙']),
 					foodRef: reference('foods').optional(),
 					additiveRef: reference('additives').optional(),
 					note: z.string().optional(),

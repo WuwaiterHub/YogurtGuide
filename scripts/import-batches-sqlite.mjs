@@ -35,8 +35,6 @@ CREATE TABLE batches (
   result_whey TEXT,
   result_flavor TEXT,
   result_overall TEXT,
-  score_reproducibility INTEGER,
-  score_satisfaction INTEGER,
   photo_album_url TEXT,
   draft INTEGER NOT NULL DEFAULT 0
 );`,
@@ -135,15 +133,13 @@ export function importBatches(databases, batches) {
 			incubation_temp_c, incubation_time_h, equipment_device, equipment_vessel, equipment_note,
 			culture_source, culture_name, culture_origin, culture_amount, culture_generation,
 			culture_id, method_id, result_set, result_texture, result_acidity, result_whey,
-			result_flavor, result_overall, score_reproducibility, score_satisfaction,
-			photo_album_url, draft
+			result_flavor, result_overall, photo_album_url, draft
 		) VALUES (
 			?, ?, ?, ?, ?, ?, ?,
 			?, ?, ?, ?, ?,
 			?, ?, ?, ?, ?,
 			?, ?, ?, ?, ?, ?,
-			?, ?, ?, ?,
-			?, ?
+			?, ?, ?, ?
 		)
 	`);
 	const insertIngredient = ingredientDb.prepare(`
@@ -182,8 +178,6 @@ export function importBatches(databases, batches) {
 				textOrNull(data.resultWhey),
 				textOrNull(data.resultFlavor),
 				textOrNull(data.resultOverall),
-				data.scoreReproducibility ?? null,
-				data.scoreSatisfaction ?? null,
 				textOrNull(data.photoAlbumUrl),
 				data.draft ? 1 : 0,
 			);
