@@ -29,3 +29,4 @@ Cloudflare 建置設了 `WORKERS_CI=1` 時，`base` 是 `/`。
 頁面讀 `src/content/**/*.md`。改這些檔之後執行 `npm run build`。
 
 批次來源是 `src/content/batches/*.md`。`npm run batch:sqlite` 只從 Markdown 重建 `data/*.sqlite`。頁面不讀 SQLite。
+
