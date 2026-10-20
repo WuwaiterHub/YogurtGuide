@@ -13,7 +13,7 @@ priceOrigin: "taobao"
 priceAsOf: "2026-10-20"
 priceNote: "規格在標題裡沒有統一。"
 reviewTier: "none"
-review: "這次沒有留言原文"
+review: "這次沒有留言原文 "
 sortOrder: 710
 draft: false
 ---
