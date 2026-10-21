@@ -25,6 +25,10 @@ const brandNote: Record<string, string> = {
 	yobite: '500、200 這類數字是活菌數。',
 	angel: '百鑽是安琪的消費品牌。',
 	baisheng: '納豆菌粉不是優格菌，列在最後。',
+	probio: '普羅家族的優格菌粉，需用優格機。',
+	leezen: '里仁自有品牌，可常溫發酵。',
+	mesim: '菌種來自美國，台灣分裝。',
+	vilson: '克菲爾型，含酵母，常溫發酵。',
 };
 
 function packUnit(unit: string) {
@@ -64,11 +68,11 @@ function specLines(data: (typeof powders)[number]['data']) {
 const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="菌粉" description="家酪優、BHK、布布優格、川秀、優比特、安琪百鑽、佰生優的發酵菌粉：菌種、包裝、標價與評價。">
+<BaseLayout title="菌粉" description="家酪優、BHK、布布優格、川秀、優比特、安琪百鑽、佰生優、普羅拜爾、里仁、喜又美、米森的發酵菌粉：菌種、包裝、標價與評價。">
 	<section class="section">
 		<div class="wrap">
 			<h1 class="page-title">菌粉<span class="en-sub">Starter Powders</span></h1>
-			<p class="page-lead">七個品牌、這次搜得到的發酵菌粉。價格只寫金額、幣別、單位和日期。</p>
+			<p class="page-lead">十一個品牌、這次搜得到的發酵菌粉。價格只寫金額、幣別、單位和日期。</p>
 			<ul class="powder-jump">
 				{
 					brands.map((brand) => (
