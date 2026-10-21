@@ -10,3 +10,7 @@
 	Access-Control-Allow-Origin: *
 	Access-Control-Allow-Methods: GET, HEAD
 	Cache-Control: public, max-age=300
+
+/build.json
+	X-Content-Type-Options: nosniff
+	Cache-Control: no-store
