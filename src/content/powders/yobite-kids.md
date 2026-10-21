@@ -4,7 +4,8 @@ brandSlug: "yobite"
 productName: "兒童常溫發酵菌"
 channels:
   - "taobao"
-spec: "淘寶列表寫兒童自制、常溫。其他頁常見 2 克 × 10 條。"
+packSize: "2 克 × 10 條"
+temperature: "常溫"
 strains: []
 strainGap: "沒有逐株名單。"
 priceAmount: "199"

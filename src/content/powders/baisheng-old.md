@@ -4,7 +4,7 @@ brandSlug: "baisheng"
 productName: "經典老酸奶"
 channels:
   - "taobao"
-spec: "2026-10 淘寶列表有。另見 3 包 × 10 條 × 1 克。"
+packSize: "1 克 × 10 條"
 strains: []
 strainGap: "沒有逐株名單。"
 priceAmount: "24.9"

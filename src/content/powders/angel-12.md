@@ -4,7 +4,7 @@ brandSlug: "angel"
 productName: "12菌型"
 channels:
   - "taobao"
-spec: "淘寶列表有 1 克 × 30 條，並寫不含代糖。"
+packSize: "1 克 × 30 條"
 strains: []
 strainGap: "沒有 12 株名單。"
 priceAmount: "49.9"

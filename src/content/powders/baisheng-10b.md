@@ -3,7 +3,8 @@ brand: "佰生優"
 brandSlug: "baisheng"
 productName: "100億常溫"
 channels: []
-spec: "其他商城標題寫 1 克 × 10、常溫乳酸菌發酵粉。"
+packSize: "1 克 × 10 包"
+temperature: "常溫"
 strains: []
 strainGap: "沒有逐株名單。100 億是活菌數說法。"
 priceAsOf: "2026-10-20"

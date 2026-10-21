@@ -4,7 +4,7 @@ brandSlug: "baisheng"
 productName: "希臘酸奶發酵菌"
 channels:
   - "taobao"
-spec: "2026-10 淘寶列表有這一條。另頁寫過 10 克。"
+packSize: "共 10 克"
 strains: []
 strainGap: "沒有逐株名單。"
 priceAmount: "26.9"

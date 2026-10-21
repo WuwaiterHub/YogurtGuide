@@ -4,7 +4,7 @@ brandSlug: "yobite"
 productName: "200億"
 channels:
   - "taobao"
-spec: "淘寶列表寫 200 億酸奶發酵菌。其他商城常見 1 克 × 10 條。"
+packSize: "1 克 × 10 條"
 strains: []
 strainGap: "200 億是活菌數說法。沒有逐株名單。"
 priceAmount: "19.9"

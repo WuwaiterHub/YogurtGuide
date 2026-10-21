@@ -4,7 +4,7 @@ brandSlug: "chuanxiu"
 productName: "LGG 開菲爾常溫"
 channels:
   - "taobao"
-spec: "2026-10 淘寶列表標題寫常溫開菲爾，並帶 LGG。"
+temperature: "常溫"
 strains:
   - name: "鼠李糖乳桿菌"
     code: "LGG"

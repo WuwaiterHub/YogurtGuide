@@ -4,7 +4,7 @@ brandSlug: "chuanxiu"
 productName: "希臘常溫8菌"
 channels:
   - "taobao"
-spec: "2026-10 淘寶列表標題寫常溫、開菲爾、雙歧、8 菌。"
+temperature: "常溫"
 strains: []
 strainGap: "標題寫 8 菌，沒有菌名。"
 priceAmount: "36"

@@ -4,7 +4,8 @@ brandSlug: "jarou"
 productName: "MESO常溫優格菌"
 channels:
   - "shopee"
-spec: "8 包／盒。每包約可做 500 毫升。常溫發酵，官網不建議放進優格機。"
+packSize: "8 包"
+temperature: "常溫，不建議放進優格機"
 strains:
   - name: "嗜熱鏈球菌"
     code: "ST30"

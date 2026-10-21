@@ -4,6 +4,223 @@ import { getNumberedStrainSources, numberedStrains } from '../../data/numbered-s
 
 const base = import.meta.env.BASE_URL;
 const strainSources = getNumberedStrainSources(numberedStrains);
+
+/** 菌種表的一列。latin 可含 <em>；former 是舊名；空欄位留白。 */
+interface SpeciesRow {
+	name: string;
+	latin: string;
+	former?: string;
+	temp?: string;
+	trait?: string;
+	note?: string;
+}
+
+const coreRows: SpeciesRow[] = [
+	{
+		name: '嗜熱鏈球菌（S 菌）',
+		latin: '<em>Streptococcus thermophilus</em>',
+		temp: '37–45°C（最佳約 42°C）',
+		trait: '產酸較快；乙醛等香氣；同型發酵；部分菌株產 EPS',
+		note: '提供 formate/CO₂ 助共生',
+	},
+	{
+		name: '保加利亞乳桿菌（L 菌）',
+		latin: '<em>Lactobacillus delbrueckii</em> subsp. <em>bulgaricus</em>',
+		temp: '40–45°C',
+		trait: '蛋白質水解較強；產乙醛；後酸化主因',
+		note: '強化酸度與典型優格風味',
+	},
+];
+
+/** 乳桿菌 → 雙歧桿菌 → 乳球菌／明串珠菌 → 其他。 */
+const speciesRows: SpeciesRow[] = [
+	{ name: '嗜酸乳桿菌（A 菌）', latin: '<em>Lactobacillus acidophilus</em>', temp: '約 37°C', trait: '耐酸、耐膽鹽；牛奶中長得慢', note: '常作益生添加' },
+	,
+	{
+		name: '乾酪乳桿菌',
+		latin: '<em>Lacticaseibacillus casei</em>',
+		former: '<em>L. casei</em>',
+		temp: '30–37°C',
+		trait: '兼性異型發酵；耐酸、耐膽鹽',
+	},
+	,
+	{
+		name: '副乾酪乳桿菌',
+		latin: '<em>Lacticaseibacillus paracasei</em>',
+		former: '<em>L. paracasei</em>',
+		temp: '30–37°C',
+		trait: '兼性異型發酵；耐酸、耐膽鹽',
+		note: '發酵乳飲料常見附加菌',
+	},
+	,
+	{
+		name: '鼠李糖乳桿菌',
+		latin: '<em>Lacticaseibacillus rhamnosus</em>',
+		former: '<em>L. rhamnosus</em>',
+		temp: '30–37°C',
+		trait: '兼性異型發酵；耐酸、耐膽鹽',
+	},
+	,
+	{
+		name: '植物乳桿菌',
+		latin: '<em>Lactiplantibacillus plantarum</em>',
+		former: '<em>L. plantarum</em>',
+		temp: '30–35°C',
+		trait: '耐酸；牛奶中長得差',
+	},
+	,
+	{
+		name: '加氏乳桿菌',
+		latin: '<em>Lactobacillus gasseri</em>',
+		temp: '37°C',
+		trait: '耐膽鹽；牛奶中長得差',
+		note: '多作優格與發酵乳附加菌；中國大陸譯名「格氏乳桿菌」',
+	},
+	,
+	{ name: '約氏乳桿菌', latin: '<em>Lactobacillus johnsonii</em>', temp: '37°C', trait: '耐膽鹽；牛奶中長得差', note: '部分發酵乳使用；La1/NCC 533 屬此物種' },
+	,
+	{ name: '瑞士乳桿菌', latin: '<em>Lactobacillus helveticus</em>', temp: '40–42°C（嗜熱）', trait: '蛋白分解強；產酸量高', note: '起司/發酵乳亦常見' },
+	,
+	{
+		name: '德氏乳桿菌乳亞種',
+		latin: '<em>Lactobacillus delbrueckii</em> subsp. <em>lactis</em>',
+		temp: '40–45°C',
+		trait: '同型發酵；可用的糖比保加利亞亞種多',
+		note: '瑞士/義式乳酪常用；包裝也寫作「乳酸乳桿菌」',
+	},
+	,
+	{
+		name: '羅伊氏黏液乳桿菌',
+		latin: '<em>Limosilactobacillus reuteri</em>',
+		former: '<em>L. reuteri</em>',
+		temp: '37°C',
+		trait: '異型發酵，產 CO₂；產 reuterin',
+		note: '多作附加菌，非優格核心菌',
+	},
+	,
+	{
+		name: '發酵黏液乳桿菌',
+		latin: '<em>Limosilactobacillus fermentum</em>',
+		former: '<em>L. fermentum</em>',
+		temp: '37°C',
+		trait: '異型發酵，產 CO₂',
+		note: '部分發酵乳研究與配方使用',
+	},
+	,
+	{
+		name: '動物雙歧桿菌乳亞種',
+		latin: '<em>Bifidobacterium animalis</em> subsp. <em>lactis</em>',
+		temp: '37–42°C',
+		trait: '耐酸與耐氧性相對較好；產乙酸，不產 CO₂',
+		note: '商業優格常見 B 菌來源',
+	},
+	,
+	{
+		name: '動物雙歧桿菌動物亞種',
+		latin: '<em>Bifidobacterium animalis</em> subsp. <em>animalis</em>',
+		temp: '37–42°C',
+		trait: '較耐氧',
+		note: '包裝只寫「動物雙歧桿菌」時，不一定是這個亞種',
+	},
+	,
+	{ name: '長雙歧桿菌', latin: '<em>Bifidobacterium longum</em>', temp: '37°C', trait: '厭氧；牛奶中長不好', note: '常作發酵乳附加菌' },
+	,
+	{
+		name: '嬰兒雙歧桿菌',
+		latin: '<em>Bifidobacterium longum</em> subsp. <em>infantis</em>',
+		temp: '37°C',
+		trait: '厭氧；擅長利用母乳寡糖',
+		note: '嬰兒腸道常見',
+	},
+	,
+	{ name: '短雙歧桿菌', latin: '<em>Bifidobacterium breve</em>', temp: '37°C', trait: '厭氧；牛奶中長不好', note: '嬰幼兒配方與部分發酵乳常見' },
+	,
+	{
+		name: '兩歧雙歧桿菌',
+		latin: '<em>Bifidobacterium bifidum</em>',
+		temp: '37°C',
+		trait: '厭氧；牛奶中長得差',
+	},
+	,
+	{
+		name: '青春雙歧桿菌',
+		latin: '<em>Bifidobacterium adolescentis</em>',
+		temp: '37°C',
+		trait: '厭氧',
+		note: '成人腸道常見',
+	},
+	{ name: '乳酸乳球菌', latin: '<em>Lactococcus lactis</em> subsp. <em>lactis</em>', temp: '25–30°C', trait: '同型發酵；部分菌株產 nisin' },
+	,
+	{
+		name: '乳脂乳球菌',
+		latin: '<em>Lactococcus cremoris</em>',
+		former: '<em>L. lactis</em> subsp. <em>cremoris</em>（2021 升種）',
+		temp: '25–30°C',
+		trait: '部分菌株產 EPS（黏絲）；40°C 不生長',
+	},
+	,
+	{
+		name: '丁二酮乳球菌等',
+		latin: '<em>Lc. lactis</em> biovar <em>diacetylactis</em>',
+		temp: '25–30°C',
+		trait: '檸檬酸變雙乙醯（奶油香）＋CO₂',
+	},
+	,
+	{
+		name: '腸膜明串珠菌等',
+		latin: '<em>Leuconostoc mesenteroides</em> subsp. <em>cremoris</em>',
+		temp: '25–30°C',
+		trait: '異型發酵，產 CO₂；單獨在牛奶中長不好',
+	},
+	,
+	{
+		name: '腸膜明串珠菌腸膜亞種',
+		latin: '<em>Leuconostoc mesenteroides</em> subsp. <em>mesenteroides</em>',
+		temp: '20–30°C',
+		trait: '異型發酵，產 CO₂；有蔗糖時產葡聚糖（黏稠）',
+		note: '泡菜類發酵常見',
+	},
+	,
+	{
+		name: '費氏丙酸桿菌',
+		latin: '<em>Propionibacterium freudenreichii</em>',
+		former: 'subsp. <em>shermanii</em>（謝氏亞種，已併回原種）',
+		temp: '30–32°C',
+		trait: '產丙酸、乙酸、CO₂；產維生素 B12；生長慢',
+		note: '瑞士乳酪孔洞的來源',
+	},
+	,
+	{
+		name: '凝結芽孢桿菌',
+		latin: '<em>Heyndrickxia coagulans</em>',
+		former: '<em>Bacillus coagulans</em>',
+		temp: '35–50°C',
+		trait: '形成芽孢、耐熱；產 L-乳酸',
+		note: '包裝也寫作「凝乳芽孢桿菌」；不負責優格凝固',
+	},
+	{
+		name: '枯草芽孢桿菌（納豆菌）',
+		latin: '<em>Bacillus subtilis</em>',
+		temp: '30–37°C',
+		trait: '形成芽孢；好氧或兼性厭氧；產納豆激酶、維生素 K2',
+		note: '納豆的發酵菌；DE111 為美國 GRAS 菌株；不負責優格凝固',
+	},
+	{
+		name: '克勞氏芽孢桿菌',
+		latin: '<em>Shouchella clausii</em>',
+		former: '<em>Bacillus clausii</em>',
+		temp: '30–37°C',
+		trait: '形成芽孢；嗜鹼；好氧、厭氧皆可生長',
+		note: '腸道保健製劑 Enterogermina 使用；不負責優格凝固',
+	},
+	{
+		name: '丁酸梭菌（酪酸菌、宮入菌）',
+		latin: '<em>Clostridium butyricum</em>',
+		trait: '形成芽孢；嚴格厭氧；大量產丁酸',
+		note: 'MIYAIRI 588（CBM 588）為日本常見製劑菌株，不帶毒素基因；不負責優格凝固',
+	},
+];
+
 ---
 
 <BaseLayout title="菌種與菌株" description="優格相關核心菌、附加菌、常溫菌、酵母真菌與常見編號菌株。">
@@ -21,154 +238,164 @@ const strainSources = getNumberedStrainSources(numberedStrains);
 				<p class="page-lead" style="margin-bottom: 1rem;">
 					Codex CXS 243-2003 將標準優格定義為下列兩種菌的共生培養，另列「替代菌種優格」為嗜熱鏈球菌搭配其他 <em>Lactobacillus</em> 物種。其他乳酸菌或雙歧桿菌常作附加菌；產品能否稱為優格，仍需依菌種組成與販售地法規判斷。
 				</p>
-				<table class="meta-table">
-					<thead>
-						<tr>
-							<th>中文</th>
-							<th>學名</th>
-							<th>角色</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>嗜熱鏈球菌（S 菌）</td>
-							<td><em>Streptococcus thermophilus</em></td>
-							<td>產酸較快；乙醛等香氣；提供 formate/CO₂ 助共生</td>
-						</tr>
-						<tr>
-							<td>保加利亞乳桿菌（L 菌）</td>
-							<td><em>Lactobacillus delbrueckii</em> subsp. <em>bulgaricus</em></td>
-							<td>蛋白質水解較強；強化酸度與典型優格風味</td>
-						</tr>
-					</tbody>
-				</table>
+					<div class="table-scroll">
+						<table class="meta-table species-table">
+							<thead>
+								<tr>
+									<th>名稱</th>
+									<th>學名</th>
+									<th>適合溫度</th>
+									<th>特色</th>
+									<th>說明</th>
+								</tr>
+							</thead>
+							<tbody>
+								{
+									coreRows.map((row) => (
+										<tr>
+											<td>{row.name}</td>
+											<td>
+												<Fragment set:html={row.latin} />
+												{row.former && (
+													<>
+														<br />
+														<span class="meta">
+															舊名 <Fragment set:html={row.former} />
+														</span>
+													</>
+												)}
+											</td>
+											<td>{row.temp ?? ''}</td>
+											<td>{row.trait ?? ''}</td>
+											<td>{row.note ?? ''}</td>
+										</tr>
+									))
+								}
+							</tbody>
+						</table>
+					</div>
 			</section>
 
-			<section class="record-block" id="adjunct-species">
-				<h2 class="record-block__title">2. 附加/機能菌<span class="en-sub">Adjunct Cultures</span></h2>
-				<table class="meta-table">
-					<thead>
-						<tr>
-							<th>中文</th>
-							<th>學名（常見）</th>
-							<th>備註</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>嗜酸乳桿菌（A 菌）</td>
-							<td><em>Lactobacillus acidophilus</em></td>
-							<td>約 37°C；常作益生添加</td>
-						</tr>
-						<tr>
-							<td>動物雙歧桿菌乳亞種</td>
-							<td><em>Bifidobacterium animalis</em> subsp. <em>lactis</em></td>
-							<td>耐酸與耐氧性相對較好；商業優格常見 B 菌來源</td>
-						</tr>
-						<tr>
-							<td>長雙歧桿菌</td>
-							<td><em>Bifidobacterium longum</em></td>
-							<td>厭氧；常作發酵乳附加菌</td>
-						</tr>
-						<tr>
-							<td>短雙歧桿菌</td>
-							<td><em>Bifidobacterium breve</em></td>
-							<td>厭氧；嬰幼兒配方與部分發酵乳常見</td>
-						</tr>
-						<tr>
-							<td>乾酪乳桿菌</td>
-							<td><em>Lacticaseibacillus casei</em></td>
-							<td>舊名 L. casei</td>
-						</tr>
-						<tr>
-							<td>副乾酪乳桿菌</td>
-							<td><em>Lacticaseibacillus paracasei</em></td>
-							<td>舊名 L. paracasei；發酵乳飲料常見附加菌</td>
-						</tr>
-						<tr>
-							<td>鼠李糖乳桿菌</td>
-							<td><em>Lacticaseibacillus rhamnosus</em></td>
-							<td>舊名 L. rhamnosus</td>
-						</tr>
-						<tr>
-							<td>植物乳桿菌</td>
-							<td><em>Lactiplantibacillus plantarum</em></td>
-							<td>舊名 L. plantarum</td>
-						</tr>
-						<tr>
-							<td>加氏乳桿菌</td>
-							<td><em>Lactobacillus gasseri</em></td>
-							<td>多作優格與發酵乳附加菌</td>
-						</tr>
-						<tr>
-							<td>約氏乳桿菌</td>
-							<td><em>Lactobacillus johnsonii</em></td>
-							<td>部分發酵乳使用；La1/NCC 533 屬此物種</td>
-						</tr>
-						<tr>
-							<td>瑞士乳桿菌</td>
-							<td><em>Lactobacillus helveticus</em></td>
-							<td>嗜熱；起司/發酵乳亦常見</td>
-						</tr>
-						<tr>
-							<td>羅伊氏黏液乳桿菌</td>
-							<td><em>Limosilactobacillus reuteri</em></td>
-							<td>舊名 L. reuteri；多作附加菌，非優格核心菌</td>
-						</tr>
-						<tr>
-							<td>發酵黏液乳桿菌</td>
-							<td><em>Limosilactobacillus fermentum</em></td>
-							<td>舊名 L. fermentum；部分發酵乳研究與配方使用</td>
-						</tr>
-					</tbody>
-				</table>
+			<section class="record-block" id="species-list">
+				<h2 class="record-block__title">2. 菌種清單<span class="en-sub">Species</span></h2>
+					<div class="table-scroll">
+						<table class="meta-table species-table">
+							<thead>
+								<tr>
+									<th>名稱</th>
+									<th>學名</th>
+									<th>適合溫度</th>
+									<th>特色</th>
+									<th>說明</th>
+								</tr>
+							</thead>
+							<tbody>
+								{
+									speciesRows.map((row) => (
+										<tr>
+											<td>{row.name}</td>
+											<td>
+												<Fragment set:html={row.latin} />
+												{row.former && (
+													<>
+														<br />
+														<span class="meta">
+															舊名 <Fragment set:html={row.former} />
+														</span>
+													</>
+												)}
+											</td>
+											<td>{row.temp ?? ''}</td>
+											<td>{row.trait ?? ''}</td>
+											<td>{row.note ?? ''}</td>
+										</tr>
+									))
+								}
+							</tbody>
+						</table>
+					</div>
 				<p class="meta">這些菌可參與發酵或在成品中存活，但不等於 Codex 定義的優格核心兩菌。</p>
-			</section>
-
-			<section class="record-block" id="mesophilic-species">
-				<h2 class="record-block__title">3. 常溫發酵相關<span class="en-sub">Mesophilic LAB</span></h2>
-				<table class="meta-table">
-					<thead>
-						<tr>
-							<th>慣稱</th>
-							<th>學名</th>
-							<th>適溫/備註</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>乳酸乳球菌</td>
-							<td><em>Lactococcus lactis</em> subsp. <em>lactis</em></td>
-							<td>25–30°C</td>
-						</tr>
-						<tr>
-							<td>乳脂乳球菌</td>
-							<td>
-								<em>Lactococcus cremoris</em>
-								<br /><span class="meta">舊名 <em>L. lactis</em> subsp. <em>cremoris</em>（2021 升種）</span>
-							</td>
-							<td>25–30°C；部分菌株產 EPS（黏絲）</td>
-						</tr>
-						<tr>
-							<td>丁二酮乳球菌等</td>
-							<td><em>Lc. lactis</em> biovar <em>diacetylactis</em></td>
-							<td>25–30°C</td>
-						</tr>
-						<tr>
-							<td>腸膜明串珠菌等</td>
-							<td><em>Leuconostoc mesenteroides</em> subsp. <em>cremoris</em></td>
-							<td>25–30°C</td>
-						</tr>
-					</tbody>
-				</table>
 				<p class="meta">
 					Viili/Filmjölk/Caspian Sea 等常概括為 Lactococcus/Leuconostoc 相關；
 					產黏（ropy）多來自 <em>Lactococcus cremoris</em> 的 EPS 菌株。
 				</p>
 			</section>
 
+			<section class="record-block" id="numbered-strains">
+				<h2 class="record-block__title">
+					3. 編號菌株清單（{numberedStrains.length}）
+					<span class="en-sub">Named &amp; Numbered Strains</span>
+				</h2>
+				<p class="page-lead" style="margin-bottom: 1rem;">
+					以下是目前公開資料可核實、曾用於優格或發酵乳的代表菌株，不是完整市售清單。編號可能是菌種保藏編號、公司研發代碼或商標名；同物種不同菌株不能視為效果相同。「說明」列出已知使用該編號的產品。配方會改，以包裝為準。
+				</p>
+					<div class="table-scroll">
+						<table class="meta-table species-table">
+							<thead>
+								<tr>
+									<th>名稱</th>
+									<th>學名</th>
+									<th>適合溫度</th>
+									<th>特色</th>
+									<th>說明</th>
+								</tr>
+							</thead>
+							<tbody>
+								{
+									numberedStrains.map((strain) => (
+										<tr>
+											<td>{strain.designation}</td>
+											<td>
+												<em>{strain.scientificName}</em>
+												{strain.formerName && (
+													<>
+														<br />
+														<span class="meta">舊名 {strain.formerName}</span>
+													</>
+												)}
+											</td>
+											<td>{strain.temp ?? ''}</td>
+											<td>
+												{strain.trait && (
+													<>
+														{strain.trait}
+														{strain.traitSourceUrl && (
+															<>
+																{' '}
+																<a href={strain.traitSourceUrl} target="_blank" rel="noopener noreferrer">
+																	↗
+																</a>
+															</>
+														)}
+													</>
+												)}
+											</td>
+											<td>
+												{strain.dairyUse && (
+													<>
+														{strain.dairyUse}
+														<br />
+													</>
+												)}
+												{strain.role}
+												<br />
+												<a href={strain.sourceUrl} target="_blank" rel="noopener noreferrer">
+													{strain.sourceLabel} ↗
+												</a>
+											</td>
+										</tr>
+									))
+								}
+							</tbody>
+						</table>
+					</div>
+				<p class="meta">
+					「含某物種」不代表「含上表特定菌株」。購買時要看完整學名加編號。配方會改，以包裝為準。
+				</p>
+			</section>
+
 			<section class="record-block" id="fungi-classification">
-				<h2 class="record-block__title">4. 依是否含酵母/真菌分類<span class="en-sub">By Fungi / Yeast</span></h2>
+				<h2 class="record-block__title">備註：依是否含酵母/真菌分類<span class="en-sub">Note: By Fungi / Yeast</span></h2>
 				<ul class="classify-list">
 					<li class="classify-list__row">
 						<span class="classify-list__label">純乳酸菌型</span>
@@ -222,57 +449,6 @@ const strainSources = getNumberedStrainSources(numberedStrains);
 				</table>
 				<p class="meta">
 					菌種本身含 <em>G. candidum</em> 時，均勻白絲絨表面可為正常成熟；純 LAB 菌粉長毛則視為污染。
-				</p>
-			</section>
-
-			<section class="record-block" id="numbered-strains">
-				<h2 class="record-block__title">
-					5. 常見編號菌株（{numberedStrains.length}）
-					<span class="en-sub">Named &amp; Numbered Strains</span>
-				</h2>
-				<p class="page-lead" style="margin-bottom: 1rem;">
-					以下是目前公開資料可核實、曾用於優格或發酵乳的代表菌株，不是完整市售清單。編號可能是菌種保藏編號、公司研發代碼或商標名；同物種不同菌株不能視為效果相同。「說明」列出已知使用該編號的產品。配方會改，以包裝為準。
-				</p>
-				<div class="table-scroll">
-					<table class="meta-table strain-table">
-						<thead>
-							<tr>
-								<th>編號/名稱</th>
-								<th>現行學名</th>
-								<th>說明</th>
-								<th>定位/來源</th>
-							</tr>
-						</thead>
-						<tbody>
-							{
-								numberedStrains.map((strain) => (
-									<tr>
-										<td>{strain.designation}</td>
-										<td>
-											<em>{strain.scientificName}</em>
-											{strain.formerName && (
-												<>
-													<br />
-													<span class="meta">舊名：{strain.formerName}</span>
-												</>
-											)}
-										</td>
-										<td>{strain.dairyUse ?? ''}</td>
-										<td>
-											{strain.role}
-											<br />
-											<a href={strain.sourceUrl} target="_blank" rel="noopener noreferrer">
-												{strain.sourceLabel} ↗
-											</a>
-										</td>
-									</tr>
-								))
-							}
-						</tbody>
-					</table>
-				</div>
-				<p class="meta">
-					「含某物種」不代表「含上表特定菌株」。購買時要看完整學名加編號。配方會改，以包裝為準。
 				</p>
 			</section>
 

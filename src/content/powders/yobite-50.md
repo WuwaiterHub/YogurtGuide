@@ -4,7 +4,7 @@ brandSlug: "yobite"
 productName: "50菌"
 channels:
   - "taobao"
-spec: "淘寶列表寫 50 種菌。這次打開的頁面沒有把 10 小包寫清楚。"
+packSize: "10 小包"
 strains: []
 strainGap: "沒有逐株名單。2025-11 有一篇社群文把「50 菌」寫成每克 50 億，菌名不採用。"
 priceAmount: "11.9"

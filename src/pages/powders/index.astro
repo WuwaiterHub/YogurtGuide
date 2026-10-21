@@ -47,6 +47,20 @@ function strainLine(strains: { name: string; code?: string }[]) {
 	return strains.map((strain) => (strain.code ? `${strain.name} ${strain.code}` : strain.name)).join(', ');
 }
 
+function packImages(data: (typeof powders)[number]['data']) {
+	const first = data.packImage ? [{ src: data.packImage, caption: data.packCaption }] : [];
+	return [...first, ...data.packImages];
+}
+
+function specLines(data: (typeof powders)[number]['data']) {
+	return [
+		['包裝', data.packSize],
+		['內容物', data.contents],
+		['發酵溫度', data.temperature],
+		['發酵時間', data.fermentTime],
+	].filter((line): line is [string, string] => Boolean(line[1]));
+}
+
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -79,24 +93,52 @@ const base = import.meta.env.BASE_URL;
 										{data.brand} {data.productName}
 									</h3>
 									<div class="powder-shots">
-										<figure class:list={['powder-shot', { 'powder-shot--empty': !data.packImage }]}>
-											{data.packImage ? (
-												<img src={`${base}${data.packImage}`} alt={`${data.brand} ${data.productName} 包裝`} />
-											) : (
+										{packImages(data).length === 0 ? (
+											<figure class="powder-shot powder-shot--empty">
 												<p>本輪未取得包裝圖</p>
-											)}
-											<figcaption>{data.packCaption ?? '包裝'}</figcaption>
-										</figure>
-										<figure class="powder-shot">
-											<p class="powder-strain-line">{strainLine(data.strains)}</p>
-											<figcaption>菌種</figcaption>
-										</figure>
+											</figure>
+										) : (
+											<figure class="powder-shot" data-carousel>
+												{packImages(data).map((image, index) => (
+													<div class="powder-slide" hidden={index > 0}>
+														<img
+															src={`${base}${image.src}`}
+															alt={`${data.brand} ${data.productName} 包裝 ${index + 1}`}
+															loading="lazy"
+														/>
+														<figcaption>{image.caption ?? '包裝'}</figcaption>
+													</div>
+												))}
+												{packImages(data).length > 1 && (
+													<>
+														<button class="powder-nav powder-nav--prev" type="button" data-step="-1" aria-label="上一張">
+															‹
+														</button>
+														<button class="powder-nav powder-nav--next" type="button" data-step="1" aria-label="下一張">
+															›
+														</button>
+														<span class="powder-count">1 / {packImages(data).length}</span>
+													</>
+												)}
+											</figure>
+										)}
+										{specLines(data).length > 0 && (
+											<figure class="powder-shot">
+												<ul class="powder-spec-list">
+													{specLines(data).map(([label, value]) => (
+														<li>
+															{label}：{value}
+														</li>
+													))}
+												</ul>
+											</figure>
+										)}
 									</div>
 									<table class="meta-table">
 										<tbody>
 											<tr>
-												<th>規格</th>
-												<td>{data.spec}</td>
+												<th>菌種</th>
+												<td>{strainLine(data.strains)}</td>
 											</tr>
 											<tr>
 												<th>價格</th>
@@ -117,3 +159,18 @@ const base = import.meta.env.BASE_URL;
 		</div>
 	</section>
 </BaseLayout>
+
+<script>
+	document.addEventListener('click', (event) => {
+		const button = (event.target as HTMLElement).closest<HTMLButtonElement>('.powder-nav');
+		if (!button) return;
+		const carousel = button.closest('[data-carousel]');
+		if (!carousel) return;
+		const slides = [...carousel.querySelectorAll<HTMLElement>('.powder-slide')];
+		const current = slides.findIndex((slide) => !slide.hidden);
+		const next = (current + Number(button.dataset.step) + slides.length) % slides.length;
+		slides.forEach((slide, index) => (slide.hidden = index !== next));
+		const count = carousel.querySelector('.powder-count');
+		if (count) count.textContent = `${next + 1} / ${slides.length}`;
+	});
+</script>

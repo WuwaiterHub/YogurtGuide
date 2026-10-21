@@ -4,7 +4,7 @@ brandSlug: "baisheng"
 productName: "開菲爾"
 channels:
   - "taobao"
-spec: "2026-10 淘寶列表寫常溫、含酵母、可以不用優格機。"
+temperature: "常溫，可以不用優格機"
 strains: []
 strainGap: "標題寫含酵母。乳酸菌、酵母的逐株名單未取得。"
 priceAmount: "26.9"

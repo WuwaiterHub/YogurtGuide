@@ -4,7 +4,7 @@ brandSlug: "angel"
 productName: "26菌型"
 channels:
   - "taobao"
-spec: "淘寶列表有 1 克 × 30 小包。銷售文寫到乳雙歧桿菌、嗜熱鏈球菌。"
+packSize: "1 克 × 30 小包"
 strains:
   - name: "乳雙歧桿菌"
   - name: "嗜熱鏈球菌"

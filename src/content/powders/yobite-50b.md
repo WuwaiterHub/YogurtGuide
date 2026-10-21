@@ -4,7 +4,8 @@ brandSlug: "yobite"
 productName: "500億"
 channels:
   - "taobao"
-spec: "實物外袋：淨含量 10 克（1 克 × 10）。正面寫活菌 ≥500 億 CFU／袋、100 株、益生元 ≥96%。"
+packSize: "1 克 × 10 包"
+contents: "益生元"
 strains: []
 strainGap: "包裝正面只寫 100 株，沒有菌名。500 億是活菌數，不是 500 株。"
 priceAmount: "22.9"

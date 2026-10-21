@@ -4,7 +4,6 @@ brandSlug: "chuanxiu"
 productName: "希臘酸奶發酵粉 LGG"
 channels:
   - "taobao"
-spec: "2026-10 淘寶列表標題。沒有寫淨含量。"
 strains:
   - name: "鼠李糖乳桿菌"
     code: "LGG"

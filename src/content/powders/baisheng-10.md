@@ -3,7 +3,7 @@ brand: "佰生優"
 brandSlug: "baisheng"
 productName: "10菌型"
 channels: []
-spec: "其他商城標題寫 1 包內有 10 小包。"
+packSize: "10 小包"
 strains: []
 strainGap: "沒有逐株名單。"
 priceAsOf: "2026-10-20"

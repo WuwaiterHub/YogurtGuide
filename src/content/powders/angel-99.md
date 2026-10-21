@@ -4,7 +4,7 @@ brandSlug: "angel"
 productName: "99菌"
 channels:
   - "taobao"
-spec: "常見 20 條裝。銷售文寫以德氏乳桿菌、唾液鏈球菌嗜熱亞種為核心，另有 97 株。"
+packSize: "20 條"
 strains:
   - name: "德氏乳桿菌"
   - name: "唾液鏈球菌嗜熱亞種"

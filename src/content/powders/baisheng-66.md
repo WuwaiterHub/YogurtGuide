@@ -3,7 +3,7 @@ brand: "佰生優"
 brandSlug: "baisheng"
 productName: "66菌"
 channels: []
-spec: "其他商城標題有量販 30 克。這次沒有打開淘寶商品頁。"
+packSize: "共 30 克"
 strains: []
 strainGap: "66 是銷售名稱。沒有 66 株名單。"
 priceAsOf: "2026-10-20"

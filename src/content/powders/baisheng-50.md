@@ -4,7 +4,7 @@ brandSlug: "baisheng"
 productName: "50菌"
 channels:
   - "shopee"
-spec: "蝦皮搜尋頁出現過。比價頁寫 10 克。"
+packSize: "共 10 克"
 strains: []
 strainGap: "50 是銷售名稱。沒有 50 株名單。"
 priceAmount: "8.9"

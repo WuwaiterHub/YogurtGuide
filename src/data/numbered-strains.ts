@@ -5,6 +5,12 @@ export interface NumberedStrain {
 	scientificName: string;
 	formerName?: string;
 	dairyUse?: string;
+	/** 菌株專屬的發酵溫度；只有菌種層級資料時留空。 */
+	temp?: string;
+	/** 和優格製作有關的菌株特色；研究背景類資訊不放。 */
+	trait?: string;
+	/** temp 或 trait 的出處。 */
+	traitSourceUrl?: string;
 	role: StrainRole;
 	sourceLabel: string;
 	sourceUrl: string;
@@ -44,6 +50,8 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: '2038（LB81）',
 		scientificName: 'Lactobacillus delbrueckii subsp. bulgaricus 2038',
 		dairyUse: '明治 LB81 優格',
+		trait: '具 EPS（多醣）合成基因；與 1131 組成 LB81',
+		traitSourceUrl: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3022021/',
 		role: '優格核心菌',
 		sourceLabel: 'Meiji',
 		sourceUrl: 'https://www.meiji.co.jp/yogurtlibrary/en/laboratory/report/lb81/top/',
@@ -52,6 +60,8 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: '1131（LB81）',
 		scientificName: 'Streptococcus thermophilus 1131',
 		dairyUse: '明治 LB81 優格',
+		trait: '生長較快，產甲酸供保加利亞乳桿菌利用（共生）',
+		traitSourceUrl: 'https://www.meijibulgariayogurt.com/en/about/yogurtbook.html',
 		role: '優格核心菌',
 		sourceLabel: 'Meiji',
 		sourceUrl: 'https://www.meiji.co.jp/yogurtlibrary/en/laboratory/report/lb81/top/',
@@ -78,6 +88,8 @@ export const numberedStrains: NumberedStrain[] = [
 		scientificName: 'Lacticaseibacillus rhamnosus GG',
 		formerName: 'Lactobacillus rhamnosus GG',
 		dairyUse: '統一 LP33 益生菌膠囊、BHK’s 十益菌EX；川秀 LGG 優格發酵菌粉',
+		trait: '不代謝乳糖、分解酪蛋白弱，牛奶中生長差',
+		traitSourceUrl: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8105022/',
 		role: '附加菌',
 		sourceLabel: 'Novonesis',
 		sourceUrl: 'https://www.novonesis.com/en/biosolutions/human-health/l-rhamnosus-lgg',
@@ -138,6 +150,9 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'OLL1073R-1',
 		scientificName: 'Lactobacillus delbrueckii subsp. bulgaricus OLL1073R-1',
 		dairyUse: '明治 R-1 優格',
+		temp: '43°C',
+		trait: '高產 EPS（多醣）；甲酸可促進 EPS 產量',
+		traitSourceUrl: 'https://www.meiji.co.jp/yogurtlibrary/en/laboratory/report/1073r1/top/',
 		role: '優格核心菌',
 		sourceLabel: 'Meiji',
 		sourceUrl: 'https://www.meiji.co.jp/yogurtlibrary/en/laboratory/report/1073r1/top/',
@@ -146,6 +161,9 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'OLS3059',
 		scientificName: 'Streptococcus thermophilus OLS3059',
 		dairyUse: '明治 R-1 優格',
+		temp: '43°C',
+		trait: '與 OLL1073R-1 搭配，發酵乳多醣產量高',
+		traitSourceUrl: 'https://www.meiji.co.jp/yogurtlibrary/en/laboratory/report/1073r1/top/',
 		role: '優格核心菌',
 		sourceLabel: 'Meiji',
 		sourceUrl: 'https://www.meiji.co.jp/yogurtlibrary/en/laboratory/report/1073r1/top/',
@@ -191,6 +209,8 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'SBT2171（Helve）',
 		scientificName: 'Lactobacillus helveticus SBT2171',
 		dairyUse: '雪印 Helve 飲用優格',
+		trait: '蛋白酶活性高；用於高達乳酪菌酛',
+		traitSourceUrl: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC4182466/',
 		role: '附加菌',
 		sourceLabel: 'Megmilk Snow Brand',
 		sourceUrl:
@@ -268,6 +288,9 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'JCM 5805（LC-Plasma）',
 		scientificName: 'Lactococcus lactis subsp. lactis JCM 5805',
 		dairyUse: 'Kirin／小岩井 iMUSE 優格',
+		temp: '30°C',
+		trait: '多以熱殺菌菌體使用',
+		traitSourceUrl: 'https://www.jcm.riken.jp/cgi-bin/jcm/jcm_number?JCM=5805',
 		role: '附加菌',
 		sourceLabel: 'Kirin',
 		sourceUrl: 'https://www.kirinholdings.com/en/newsroom/release/2020/0928_01.pdf',
@@ -284,6 +307,8 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'YIT 2027',
 		scientificName: 'Lactococcus lactis YIT 2027',
 		dairyUse: 'Yakult Mil-Mil 菌組',
+		trait: '不產雙乙醯與乙偶姻；與雙歧桿菌共同發酵乳',
+		traitSourceUrl: 'https://data.epo.org/publication-server/rest/v1.0/publication-dates/20000126/patents/EP0974268NWA1/document.html',
 		role: '附加菌',
 		sourceLabel: 'PMC',
 		sourceUrl: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC4034291/',
@@ -300,6 +325,9 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'CM4 / FERM BP-6060',
 		scientificName: 'Lactobacillus helveticus CM4',
 		dairyUse: 'Calpis 機能發酵乳',
+		temp: '37°C',
+		trait: '胞外蛋白酶活性高；牛奶中產 VPP/IPP 三胜肽',
+		traitSourceUrl: 'https://patents.google.com/patent/US6534304',
 		role: '附加菌',
 		sourceLabel: 'Journal of Dairy Science',
 		sourceUrl: 'https://doi.org/10.3168/jds.S0022-0302(06)72275-5',
@@ -308,6 +336,8 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'CP2305',
 		scientificName: 'Lactobacillus gasseri CP2305',
 		dairyUse: 'Asahi CP2305 相關食品',
+		trait: '多以熱處理（不活化）菌體使用',
+		traitSourceUrl: 'https://www.asahigroup-holdings.com/en/newsroom/detail/20250225-0201.html',
 		role: '附加菌',
 		sourceLabel: 'Asahi',
 		sourceUrl: 'https://www.asahi-gf.co.jp/en/material/cp2305/index.html',
@@ -316,6 +346,8 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'L-92',
 		scientificName: 'Lactobacillus acidophilus L-92',
 		dairyUse: 'Asahi L-92 相關食品',
+		trait: '多以熱殺菌菌體使用',
+		traitSourceUrl: 'https://www.asahigroup-holdings.com/en/rd/material/l92.html',
 		role: '附加菌',
 		sourceLabel: 'Asahi',
 		sourceUrl: 'https://www.l-92.net/',
@@ -358,6 +390,8 @@ export const numberedStrains: NumberedStrain[] = [
 	{
 		designation: 'CNRZ397',
 		scientificName: 'Lactobacillus delbrueckii subsp. bulgaricus CNRZ397',
+		trait: '細胞表面蛋白酶 PrtB，可分解 α、β 酪蛋白',
+		traitSourceUrl: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC178052',
 		role: '優格核心菌',
 		sourceLabel: 'PMC',
 		sourceUrl: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC92460/',
@@ -423,6 +457,8 @@ export const numberedStrains: NumberedStrain[] = [
 	{
 		designation: 'LAFTI B94',
 		scientificName: 'Bifidobacterium animalis subsp. lactis B94',
+		trait: '優格 4°C 冷藏 28 天菌數約降 1 log；提高優格蛋白分解',
+		traitSourceUrl: 'https://hub.hku.hk/handle/10722/144430',
 		role: '附加菌',
 		sourceLabel: 'Foods',
 		sourceUrl: 'https://doi.org/10.3390/foods13193021',
@@ -431,6 +467,8 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'LAFTI L26',
 		scientificName: 'Lacticaseibacillus paracasei L26',
 		formerName: 'Lactobacillus paracasei LAFTI L26',
+		trait: '優格 4°C 冷藏 28 天菌數穩定；提高優格蛋白分解',
+		traitSourceUrl: 'https://hub.hku.hk/handle/10722/144430',
 		role: '附加菌',
 		sourceLabel: 'International Dairy Journal',
 		sourceUrl: 'https://doi.org/10.1016/j.idairyj.2005.10.008',
@@ -470,6 +508,8 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'YIT 10347（BF-1）',
 		scientificName: 'Bifidobacterium bifidum YIT 10347',
 		dairyUse: 'Yakult BF-1',
+		trait: '與嗜熱鏈球菌共同發酵；透氧容器 10°C 存放 14 天存活率約 34%',
+		traitSourceUrl: 'https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/8058051',
 		role: '附加菌',
 		sourceLabel: 'Yakult',
 		sourceUrl: 'https://www.yakult.co.jp/bf-1/',
@@ -488,6 +528,8 @@ export const numberedStrains: NumberedStrain[] = [
 		scientificName: 'Lacticaseibacillus paracasei Lpc-37',
 		formerName: 'Lactobacillus paracasei Lpc-37',
 		dairyUse: 'BHK’s 十益菌EX、華儀優沛樂',
+		trait: '同型發酵；不產 D-乳酸',
+		traitSourceUrl: 'https://nasc.cc/wp-content/uploads/2024/03/PD26251.pdf',
 		role: '附加菌',
 		sourceLabel: 'IFF',
 		sourceUrl:
@@ -531,6 +573,8 @@ export const numberedStrains: NumberedStrain[] = [
 		designation: 'LAFTI L10',
 		scientificName: 'Lactobacillus helveticus LAFTI L10',
 		formerName: 'Lactobacillus acidophilus LAFTI L10',
+		trait: '優格 4°C 冷藏 28 天菌數穩定；提高優格蛋白分解',
+		traitSourceUrl: 'https://hub.hku.hk/handle/10722/144430',
 		role: '附加菌',
 		sourceLabel: 'PMC',
 		sourceUrl: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9813279/',

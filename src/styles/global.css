@@ -367,16 +367,24 @@ main > .section:first-child > .wrap > .page-title:first-child .en-sub {
 	overflow-x: auto;
 }
 
-.strain-table {
-	min-width: 58rem;
+.species-table {
+	min-width: 52rem;
 }
 
-.strain-table th:first-child {
-	width: 13rem;
+.species-table th:first-child {
+	width: 11rem;
 }
 
-.strain-table th:nth-child(2) {
-	width: 18rem;
+.species-table th:nth-child(2) {
+	width: 15rem;
+}
+
+.species-table th:nth-child(3) {
+	width: 6rem;
+}
+
+.species-table th:nth-child(4) {
+	width: 10rem;
 }
 
 .meta-table th,
@@ -642,6 +650,41 @@ main > .section:first-child > .wrap > .page-title:first-child .en-sub {
 	min-height: 8rem;
 }
 
+.powder-shot[data-carousel] {
+	position: relative;
+}
+
+.powder-nav {
+	position: absolute;
+	top: calc(0.55rem + 5.5rem);
+	transform: translateY(-50%);
+	width: 2rem;
+	height: 2rem;
+	border: 0;
+	border-radius: 50%;
+	background: rgb(0 0 0 / 0.45);
+	color: #fff;
+	font-size: 1.4rem;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.powder-nav--prev {
+	left: 0.8rem;
+}
+
+.powder-nav--next {
+	right: 0.8rem;
+}
+
+.powder-count {
+	position: absolute;
+	right: 0.6rem;
+	bottom: 0.45rem;
+	font-size: 0.78rem;
+	color: var(--ink-muted);
+}
+
 .powder-shot img {
 	display: block;
 	width: 100%;
@@ -663,10 +706,10 @@ main > .section:first-child > .wrap > .page-title:first-child .en-sub {
 	font-size: 0.92rem;
 }
 
-.powder-strain-line {
+.powder-spec-list {
 	margin: 0;
-	font-size: 0.95rem;
-	line-height: 1.45;
+	padding: 0;
+	list-style: none;
 }
 
 .powder-plate {

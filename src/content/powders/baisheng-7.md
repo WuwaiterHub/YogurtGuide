@@ -3,7 +3,6 @@ brand: "佰生優"
 brandSlug: "baisheng"
 productName: "天然7菌"
 channels: []
-spec: "品牌百科有這一條。這次購物搜尋沒有單獨標題。"
 strains:
   - name: "保加利亞乳桿菌"
   - name: "嗜熱鏈球菌"

@@ -3,7 +3,7 @@ brand: "佰生優"
 brandSlug: "baisheng"
 productName: "雙歧桿菌型"
 channels: []
-spec: "品牌百科：保加利亞乳桿菌、嗜熱鏈球菌與三株雙歧。包裝常見 10 小包。"
+packSize: "10 小包"
 strains:
   - name: "保加利亞乳桿菌"
   - name: "嗜熱鏈球菌"

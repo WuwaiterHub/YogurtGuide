@@ -4,7 +4,6 @@ brandSlug: "chuanxiu"
 productName: "100菌"
 channels:
   - "taobao"
-spec: "淘寶標題寫 100 菌種。這次打開的頁面沒有淨含量。"
 strains: []
 strainGap: "100 是銷售名稱。沒有 100 株名單。"
 priceAmount: "25.90"

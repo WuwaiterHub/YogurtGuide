@@ -3,7 +3,7 @@ brand: "佰生優"
 brandSlug: "baisheng"
 productName: "益菌貝貝"
 channels: []
-spec: "品牌百科的兒童向舊品項。配料另有玉米澱粉、乳糖。現在標題多寫「兒童養護型」，兩邊沒有對上是不是同一配方。"
+contents: "玉米澱粉、乳糖"
 strains:
   - name: "乳雙歧桿菌"
   - name: "長雙歧桿菌"

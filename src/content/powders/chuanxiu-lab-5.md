@@ -4,9 +4,15 @@ brandSlug: "chuanxiu"
 productName: "乳酸菌5菌"
 channels:
   - "taobao"
-spec: "與 60 菌出現在同一商品頁。留言選項寫乳酸菌 5 菌三大包（10 克 × 3）。"
-strains: []
-strainGap: "這一頁沒有配料表。不把「5 菌」寫成五個菌名。"
+packSize: "1 克 × 10 小包"
+contents: "麥芽糊精"
+fermentTime: "8–10 小時，天冷可延到 12 小時"
+strains:
+  - name: "保加利亞乳桿菌"
+  - name: "嗜熱鏈球菌"
+  - name: "嗜酸乳桿菌"
+  - name: "植物乳桿菌"
+  - name: "乾酪乳桿菌"
 priceAmount: "6.90"
 priceCurrency: "CNY"
 priceOrigin: "taobao"

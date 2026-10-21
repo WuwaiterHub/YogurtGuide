@@ -4,7 +4,9 @@ brandSlug: "jarou"
 productName: "28安敏優格菌"
 channels:
   - "shopee"
-spec: "16 包／盒，每包 2 公克、200 億以上活菌，約可做 1 公升。中高溫，約 38–45°C、6–14 小時。"
+packSize: "2 克 × 16 包"
+temperature: "38–45°C"
+fermentTime: "6–14 小時"
 strains:
   - name: "植物乳桿菌"
     code: "LP28"

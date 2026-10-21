@@ -4,7 +4,7 @@ brandSlug: "bubu"
 productName: "鮮奶優格菌粉"
 channels:
   - "shopee"
-spec: "這次看到的是 10 包入。2017 年紀錄是 2 克 × 25 小包、6 種菌、每包 108 億。"
+packSize: "10 包"
 strains:
   - name: "嗜熱鏈球菌"
   - name: "保加利亞乳桿菌"

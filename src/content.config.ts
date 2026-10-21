@@ -135,7 +135,10 @@ const starterPowders = defineCollection({
 		brandSlug: z.string(),
 		productName: z.string(),
 		channels: z.array(z.enum(['shopee', 'taobao'])).default([]),
-		spec: z.string(),
+		packSize: z.string().optional(),
+		contents: z.string().optional(),
+		temperature: z.string().optional(),
+		fermentTime: z.string().optional(),
 		strains: z
 			.array(
 				z.object({
@@ -155,6 +158,14 @@ const starterPowders = defineCollection({
 		review: z.string(),
 		packImage: z.string().optional(),
 		packCaption: z.string().optional(),
+		packImages: z
+			.array(
+				z.object({
+					src: z.string(),
+					caption: z.string().optional(),
+				}),
+			)
+			.default([]),
 		sortOrder: z.number().default(100),
 		draft: z.boolean().default(false),
 	}),

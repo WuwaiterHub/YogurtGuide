@@ -3,7 +3,7 @@ brand: "優比特"
 brandSlug: "yobite"
 productName: "77菌"
 channels: []
-spec: "其他商城常見 1 克 × 10 條。這次沒有打開淘寶單品頁。"
+packSize: "1 克 × 10 條"
 strains: []
 strainGap: "77 是銷售名稱。沒有 77 株名單。"
 priceAmount: "13.9"

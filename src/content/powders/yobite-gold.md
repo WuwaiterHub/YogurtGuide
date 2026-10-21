@@ -4,7 +4,8 @@ brandSlug: "yobite"
 productName: "金裝原味"
 channels:
   - "taobao"
-spec: "其他商城常見 2 克 × 10 條，文案寫有膳食纖維。這次打開的淘寶頁選項是金裝原味 1 盒。"
+packSize: "2 克 × 10 條"
+contents: "膳食纖維"
 strains: []
 strainGap: "沒有逐株名單。"
 priceAmount: "50"

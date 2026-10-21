@@ -3,7 +3,7 @@ brand: "家酪優"
 brandSlug: "jarou"
 productName: "440營業用優格菌"
 channels: []
-spec: "30 公克／瓶。每克 40 億活菌。1 克最多可發酵 2 公升。美國進口，冷凍保存。"
+packSize: "30 克／瓶"
 strains:
   - name: "長雙歧桿菌"
   - name: "嗜酸乳桿菌"

@@ -4,7 +4,9 @@ brandSlug: "bhk"
 productName: "100%手作優格粉"
 channels:
   - "shopee"
-spec: "2 公克 × 15 包／袋。官方建議約 250 毫升溫鮮奶、密封 6–12 小時。成分另有菊糖與玉米來源可溶性纖維。"
+packSize: "2 克 × 15 包"
+contents: "菊糖、玉米來源可溶性纖維"
+fermentTime: "6–12 小時"
 strains:
   - name: "植物乳桿菌"
   - name: "乳雙歧桿菌"

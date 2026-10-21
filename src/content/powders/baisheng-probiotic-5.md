@@ -3,7 +3,8 @@ brand: "佰生優"
 brandSlug: "baisheng"
 productName: "益生菌型（5菌）"
 channels: []
-spec: "品牌百科與舊商品頁：10 克裝，常見 1 克 × 10。配料常另有麥芽糊精。"
+packSize: "1 克 × 10 包"
+contents: "麥芽糊精"
 strains:
   - name: "保加利亞乳桿菌"
   - name: "嗜熱鏈球菌"

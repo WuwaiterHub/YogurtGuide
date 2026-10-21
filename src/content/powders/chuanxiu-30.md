@@ -3,7 +3,7 @@ brand: "川秀"
 brandSlug: "chuanxiu"
 productName: "30菌酸奶發酵粉"
 channels: []
-spec: "官網與「老酸奶 30 菌」分列。這次沒有核對是不是同一配方。"
+fermentTime: "8–10 小時，天冷可延到 10–12 小時"
 strains: []
 strainGap: "逐株名單未取得。"
 priceAsOf: "2026-10-20"

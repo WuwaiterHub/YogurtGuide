@@ -4,7 +4,9 @@ brandSlug: "jarou"
 productName: "730優格菌"
 channels:
   - "shopee"
-spec: "16 包／盒。每包 120 億以上活菌。中高溫，約 38–45°C、8–12 小時。"
+packSize: "16 包"
+temperature: "38–45°C"
+fermentTime: "8–12 小時"
 strains:
   - name: "長雙歧桿菌"
     code: "BL774"

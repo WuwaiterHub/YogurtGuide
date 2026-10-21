@@ -4,7 +4,7 @@ brandSlug: "yobite"
 productName: "400億"
 channels:
   - "taobao"
-spec: "淘寶商品頁淨含量 10 克。標題同時出現「400 億」和「400 菌」。參數只列 7 個屬名。"
+packSize: "共 10 克"
 strains:
   - name: "鼠李糖乳桿菌"
   - name: "乾酪乳桿菌"

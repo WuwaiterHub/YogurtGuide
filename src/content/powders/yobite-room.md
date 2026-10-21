@@ -4,7 +4,7 @@ brandSlug: "yobite"
 productName: "常溫希臘發酵菌"
 channels:
   - "taobao"
-spec: "淘寶列表寫常溫發酵、乾噎、試新裝。其他頁也寫約 25°C。"
+temperature: "常溫，約 25°C"
 strains: []
 strainGap: "沒有逐株名單。"
 priceAmount: "39.9"

@@ -39,7 +39,10 @@ export async function powdersDocument() {
 			brand: data.brand,
 			brandSlug: data.brandSlug,
 			productName: data.productName,
-			spec: data.spec,
+			packSize: data.packSize ?? '',
+			contents: data.contents ?? '',
+			temperature: data.temperature ?? '',
+			fermentTime: data.fermentTime ?? '',
 			strains: data.strains,
 			strainGap: data.strainGap ?? '',
 			price:
@@ -53,6 +56,9 @@ export async function powdersDocument() {
 					: null,
 			review: data.reviewTier === 'none' ? '' : data.review,
 			imageUrl: data.packImage ? `${officialOrigin}/${data.packImage}` : '',
+			imageUrls: [data.packImage, ...data.packImages.map((image) => image.src)]
+				.filter(Boolean)
+				.map((src) => `${officialOrigin}/${src}`),
 		})),
 	};
 }

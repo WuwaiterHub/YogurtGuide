@@ -4,7 +4,7 @@ brandSlug: "angel"
 productName: "10菌型"
 channels:
   - "taobao"
-spec: "淘寶列表有 10 菌。其他商城常見 1 克 × 8 包。"
+packSize: "1 克 × 8 包"
 strains: []
 strainGap: "沒有逐株名單。文案常帶雙歧桿菌，沒有編號。"
 priceAmount: "25"

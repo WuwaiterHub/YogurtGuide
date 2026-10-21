@@ -3,7 +3,7 @@ brand: "佰生優"
 brandSlug: "baisheng"
 productName: "兒童養護型"
 channels: []
-spec: "其他商城標題有，常見 15 克。這次沒有打開淘寶商品頁。"
+packSize: "共 15 克"
 strains: []
 strainGap: "現行菌名未取得。不沿用益菌貝貝的舊名單。"
 priceAsOf: "2026-10-20"
