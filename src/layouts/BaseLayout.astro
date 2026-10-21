@@ -55,14 +55,14 @@ const isYogurtTypesPage = pathname.includes('/cultures') && !isStrainsPage;
 					<a href={`${base}cultures/`} aria-current={isYogurtTypesPage ? 'page' : undefined}
 						>優格種類</a
 					>
+					<a href={`${base}powders/`} aria-current={pathname.includes('/powders') ? 'page' : undefined}
+						>菌粉</a
+					>
 					<a href={`${base}cultures/species/`} aria-current={isStrainsPage ? 'page' : undefined}
 						>菌種與菌株</a
 					>
 					<a href={`${base}pairing/`} aria-current={pathname.includes('/pairing') ? 'page' : undefined}
 						>搭配</a
-					>
-					<a href={`${base}powders/`} aria-current={pathname.includes('/powders') ? 'page' : undefined}
-						>菌粉</a
 					>
 					<a href={`${base}market/`} aria-current={pathname.includes('/market') ? 'page' : undefined}
 						>市售優格</a
