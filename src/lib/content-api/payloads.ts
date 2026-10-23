@@ -64,21 +64,20 @@ export async function powdersDocument() {
 }
 
 export async function overnightOatsDocument() {
-	const recipes = (await getCollection('overnightOats', ({ data }) => !data.draft)).sort((a, b) =>
-		a.data.title.localeCompare(b.data.title, 'zh-Hant'),
+	const recipes = (await getCollection('overnightOats', ({ data }) => !data.draft)).sort(
+		(a, b) => a.data.sortOrder - b.data.sortOrder || a.data.title.localeCompare(b.data.title, 'zh-Hant'),
 	);
 	return {
 		schemaVersion: 1,
 		items: recipes.map(({ id, data }) => ({
 			id,
 			title: data.title,
-			servings: data.servings,
-			soakHours: data.soakHours,
-			texture: data.texture,
+			texture: data.texture ?? '',
 			ingredients: data.ingredients.map((item) => ({
 				name: item.name,
-				amount: item.amount,
-				unit: item.unit,
+				amount: item.amount ?? null,
+				amountMax: item.amountMax ?? null,
+				unit: item.unit ?? '',
 				foodId: refId(item.foodRef),
 				additiveId: refId(item.additiveRef),
 				note: item.note ?? '',

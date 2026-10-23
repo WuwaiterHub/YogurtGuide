@@ -7,6 +7,9 @@
 - 包裝圖可放多張（`packImages`），一次只顯示一張，左右箭頭切換。沒有圖時只顯示「本輪未取得包裝圖」，不再多一行「包裝」。App JSON 多一個 `imageUrls`。
 - 菌粉的「規格」只列包裝（每包克數 × 包數）、內容物、發酵溫度、發酵時間，有資料才顯示。原本的 `spec` 說明文字拆成 `packSize`、`contents`、`temperature`、`fermentTime`，來源與通路說明不再出現在頁面與 App JSON。
 - 「菌種與菌株」頁的核心種、附加／機能菌、常溫發酵相關、常見編號菌株四個表格統一為「名稱／學名／適合溫度／特色／說明」五欄；舊名移到學名下方，編號菌株的定位與來源連結併入說明欄。「依是否含酵母/真菌分類」移到最下方改為備註。內容不增刪。
+- 加入 Capacitor 8 與 `android/` 專案，把網站包成 Android App。新增 `npm run app:sync`、`app:debug`、`app:bundle`（gradlew 由 `scripts/build-app.mjs` 以完整路徑呼叫）；App 版建置 `base` 為 `/`，並把站內資料夾式連結改寫成 `index.html`（Capacitor 不會自動對應）。release 簽章讀 `android/key.properties`。`.gitignore` 排除 `*.jks`、`*.keystore`、`android/key.properties`，保留 `gradle-wrapper.jar`；`check:gitignore` 也檢查前兩項。
+- 搭配頁的隔夜燕麥範本拿掉「人份／冷藏／小時」與「×2」欄，改為「食材／份量」；份量可留白或寫範圍（`amountMax`）。原食譜改名「基本款」並換成新配方，新增「小山園抹茶杯」（作者 mukoo0630，份量暫不寫）。App 的 `overnight-oats.json` 拿掉 `servings`、`soakHours`，食材多 `amountMax`，份量不明時 `amount` 為 null。
+- 菌粉頁把少於 3 款的品牌（BHK、布布優格、普羅拜爾、里仁、喜又美、米森）併成最後的「其它」，品牌說明改放在各卡片標題下。
 - `deploy.yml` 新增 `verify-cloudflare`：部署後每分鐘讀正式網站的 `/build.json`，15 分鐘內 commit 對不上就讓 workflow 失敗。`/build.json` 由建置時的 `WORKERS_CI_COMMIT_SHA`（Cloudflare）或 `GITHUB_SHA`（GitHub Actions）產生，不快取。起因是 2026-10-21 有一次 push 沒觸發 Cloudflare 建置，GitHub 卻全綠。
 - 菌粉頁新增四個品牌各一款：普羅拜爾 普羅優菌 Plus+、里仁 高優活 DIY 優格粉、喜又美 DIY 機能優格菌粉、米森 益生菌手作優格粉（克菲爾型，含酵母）。資料來自官網與通路頁，沒有找到獨立評價。
 - 上方導覽列的「菌粉」移到「優格種類」與「菌種與菌株」中間。

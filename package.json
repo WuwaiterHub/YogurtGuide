@@ -16,14 +16,20 @@
     "check:gitignore": "node scripts/ci-check-gitignore.mjs",
     "check:security": "node scripts/ci-check-security.mjs",
     "check:deploy": "npm run check:gitignore && npm run check:security && npm run test:ci && npm run build",
+    "app:sync": "node scripts/build-app.mjs",
+    "app:debug": "node scripts/build-app.mjs --debug",
+    "app:bundle": "node scripts/build-app.mjs --bundle",
     "prepare": "husky"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
     "astro": "^7.1.4"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.4",
+    "@capacitor/cli": "^8.5.3",
     "husky": "^9.1.7",
     "wrangler": "4.143.0"
-  } 
+  }
 }

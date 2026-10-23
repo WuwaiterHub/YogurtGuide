@@ -25,6 +25,8 @@ const required = [
 	['node_modules/', ['node_modules/', 'node_modules']],
 	['.astro/', ['.astro/', '.astro']],
 	['dist/', ['dist/', 'dist']],
+	['*.jks', ['*.jks']],
+	['*.keystore', ['*.keystore']],
 ];
 
 for (const [label, options] of required) {

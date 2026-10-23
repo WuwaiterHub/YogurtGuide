@@ -175,22 +175,30 @@ const overnightOats = defineCollection({
 	loader: glob({ base: './src/content/overnight-oats', pattern: '**/*.md' }),
 	schema: z.object({
 		title: z.string(),
-		servings: z.number().int().positive(),
-		soakHours: z.number().positive(),
-		texture: z.string(),
+		texture: z.string().optional(),
 		ingredients: z
 			.array(
-				z.object({
-					name: z.string(),
-					amount: z.number().positive(),
-					unit: z.enum(['g', 'ml', '顆', '湯匙']),
-					foodRef: reference('foods').optional(),
-					additiveRef: reference('additives').optional(),
-					note: z.string().optional(),
-				}),
+				z
+					.object({
+						name: z.string(),
+						// 份量不明時三個都不寫；寫了 amount 就要有 unit。amountMax 表示範圍上限。
+						amount: z.number().positive().optional(),
+						amountMax: z.number().positive().optional(),
+						unit: z.enum(['g', 'ml', '顆', '湯匙']).optional(),
+						foodRef: reference('foods').optional(),
+						additiveRef: reference('additives').optional(),
+						note: z.string().optional(),
+					})
+					.refine((item) => (item.amount === undefined) === (item.unit === undefined), {
+						message: '份量要同時寫 amount 與 unit，或兩個都不寫',
+					})
+					.refine((item) => item.amountMax === undefined || (item.amount !== undefined && item.amountMax > item.amount), {
+						message: 'amountMax 要搭配 amount，且大於 amount',
+					}),
 			)
 			.min(2),
 		steps: z.array(z.string()).min(1),
+		sortOrder: z.number().default(100),
 		draft: z.boolean().default(false),
 	}),
 });

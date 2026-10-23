@@ -17,6 +17,18 @@ for (const item of powders) {
 	byBrand.get(brandSlug)?.push(item);
 }
 
+// 少於 3 款的品牌併成「其它」，放在最後。
+const minPerBrand = 3;
+const otherItems = brands
+	.filter((brand) => (byBrand.get(brand.slug)?.length ?? 0) < minPerBrand)
+	.flatMap((brand) => byBrand.get(brand.slug) ?? []);
+const groups = [
+	...brands
+		.filter((brand) => (byBrand.get(brand.slug)?.length ?? 0) >= minPerBrand)
+		.map((brand) => ({ ...brand, items: byBrand.get(brand.slug) ?? [] })),
+	...(otherItems.length > 0 ? [{ slug: 'other', name: '其它', items: otherItems }] : []),
+];
+
 const brandNote: Record<string, string> = {
 	jarou: '優格菌四款。',
 	bhk: '這裡只收發酵用的手作優格粉。',
@@ -29,6 +41,7 @@ const brandNote: Record<string, string> = {
 	leezen: '里仁自有品牌，可常溫發酵。',
 	mesim: '菌種來自美國，台灣分裝。',
 	vilson: '克菲爾型，含酵母，常溫發酵。',
+	other: '少於 3 款的品牌併在這裡。',
 };
 
 function packUnit(unit: string) {
@@ -75,10 +88,10 @@ const base = import.meta.env.BASE_URL;
 			<p class="page-lead">十一個品牌、這次搜得到的發酵菌粉。價格只寫金額、幣別、單位和日期。</p>
 			<ul class="powder-jump">
 				{
-					brands.map((brand) => (
+					groups.map((group) => (
 						<li>
-							<a href={`#${brand.slug}`}>
-								{brand.name}（{byBrand.get(brand.slug)?.length}）
+							<a href={`#${group.slug}`}>
+								{group.name}（{group.items.length}）
 							</a>
 						</li>
 					))
@@ -86,16 +99,19 @@ const base = import.meta.env.BASE_URL;
 			</ul>
 
 			{
-				brands.map((brand) => (
-					<section class="record-block" id={brand.slug}>
-						<h2 class="record-block__title">{brand.name}</h2>
-						<p class="meta">{brandNote[brand.slug]}</p>
+				groups.map((group) => (
+					<section class="record-block" id={group.slug}>
+						<h2 class="record-block__title">{group.name}</h2>
+						<p class="meta">{brandNote[group.slug]}</p>
 						{
-							byBrand.get(brand.slug)?.map(({ id, data }) => (
+							group.items.map(({ id, data }) => (
 								<article class="market-card" id={id}>
 									<h3 class="market-card__title">
 										{data.brand} {data.productName}
 									</h3>
+									{group.slug === 'other' && brandNote[data.brandSlug] && (
+										<p class="meta">{brandNote[data.brandSlug]}</p>
+									)}
 									<div class="powder-shots">
 										{packImages(data).length === 0 ? (
 											<figure class="powder-shot powder-shot--empty">

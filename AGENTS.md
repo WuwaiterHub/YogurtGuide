@@ -32,9 +32,11 @@ Cloudflare 建置設了 `WORKERS_CI=1` 時，`base` 是 `/`。
 
 菌粉頁不放店名與連結。沒有評價寫「沒有評價資訊」，沒有菌種寫「沒有菌種資訊」。價格只留金額、幣別、單位、日期。
 
-隔夜燕麥每個食材都要有數量，單位只能是 `g`、`ml`、`顆`、`湯匙`。缺了 `npm run build` 會失敗。
+隔夜燕麥的份量不明時 `amount`、`unit` 都不寫；寫了 `amount` 就要有 `unit`，範圍用 `amountMax`。單位只能是 `g`、`ml`、`顆`、`湯匙`。寫錯 `npm run build` 會失敗。
 
 App 讀的資料是建置產出的 `app-content/v1/*.json`。改內容仍改 Markdown，不要手改 `dist/`。
 
-這一期只有網站。`src/config/platforms.ts` 裡的 Android 尚未建置，iOS 不要執行 `cap add ios`。
+這一期是網站與 Android。Android 用 Capacitor 包網站：`npm run app:sync` 建置 App 版並同步到 `android/`，`npm run app:debug` 出 debug APK，`npm run app:bundle` 出上架用 AAB。建置需要 JDK 21（本機在 `C:\Users\wuwai\jdk-21`，執行前設 `JAVA_HOME`）。`android/local.properties` 的 `sdk.dir` 用正斜線。
+App 版建置設 `CAP_BUILD=1`，`base` 是 `/`，站內連結改寫成 `.../index.html`。
+keystore（`*.jks`、`*.keystore`）與 `android/key.properties` 不進版控。iOS 不要執行 `cap add ios`。
 

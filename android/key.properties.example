@@ -1,0 +1,6 @@
+# 複製成 android/key.properties 並填入自己的值。key.properties 不進版控。
+# storeFile 用絕對路徑，keystore 放在 repo 外面。
+storeFile=D:/WadeDev/.keystores/yogurtguide-release.jks
+storePassword=
+keyAlias=yogurtguide
+keyPassword=

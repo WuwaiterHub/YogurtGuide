@@ -2,8 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
-const recipeEntries = (await getCollection('overnightOats', ({ data }) => !data.draft)).sort((a, b) =>
-	a.data.title.localeCompare(b.data.title, 'zh-Hant'),
+const recipeEntries = (await getCollection('overnightOats', ({ data }) => !data.draft)).sort(
+	(a, b) => a.data.sortOrder - b.data.sortOrder || a.data.title.localeCompare(b.data.title, 'zh-Hant'),
 );
 const recipes = await Promise.all(
 	recipeEntries.map(async (entry) => ({ entry, Content: (await render(entry)).Content })),
@@ -14,9 +14,10 @@ function refId(ref: { id: string } | string | undefined) {
 	return typeof ref === 'string' ? ref : ref.id;
 }
 
-function totalGrams(ingredients: { amount: number; unit: 'g' | 'ml' | '顆' | '湯匙' }[]) {
-	if (!ingredients.every((item) => item.unit === 'g')) return null;
-	return ingredients.reduce((sum, item) => sum + item.amount, 0);
+function portion(item: { amount?: number; amountMax?: number; unit?: string }) {
+	if (item.amount === undefined) return '';
+	const value = item.amountMax ? `${item.amount}–${item.amountMax}` : `${item.amount}`;
+	return `${value} ${item.unit}`;
 }
 
 const singles = [
@@ -121,33 +122,26 @@ const additives = (await getCollection('additives', ({ data }) => !data.draft)).
 const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="搭配" description="隔夜燕麥優格食譜：每項食材都有重量。另有原型食材、益生元與其他吃法。">
+<BaseLayout title="搭配" description="隔夜燕麥優格食譜：食材與份量。另有原型食材、益生元與其他吃法。">
 	<section class="section">
 		<div class="wrap">
 			<h1 class="page-title">搭配<span class="en-sub">Pairing</span></h1>
-			<p class="page-lead">隔夜燕麥優格是主體。每項食材都寫克數或毫升。</p>
+			<p class="page-lead">隔夜燕麥優格是主體。份量不明的食材先留白。</p>
 
 			<section class="record-block" id="overnight-oats">
 				<h2 class="record-block__title">1. 隔夜燕麥優格<span class="en-sub">Overnight oats</span></h2>
 				{
 					recipes.map(({ entry, Content }) => {
 						const data = entry.data;
-						const grams = totalGrams(data.ingredients);
 						return (
 							<article class="pairing-group">
-								<h3 class="pairing-group__title">
-									{data.title}
-									<span class="en-sub">
-										{data.servings} 人份 · 冷藏 {data.soakHours} 小時
-									</span>
-								</h3>
-								<p class="meta">{data.texture}</p>
+								<h3 class="pairing-group__title">{data.title}</h3>
+								{data.texture && <p class="meta">{data.texture}</p>}
 								<table class="meta-table">
 									<thead>
 										<tr>
 											<th>食材</th>
-											<th>重量</th>
-											<th>×2</th>
+											<th>份量</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -163,22 +157,10 @@ const base = import.meta.env.BASE_URL;
 														)}
 														{item.note ? <span class="meta"> {item.note}</span> : null}
 													</td>
-													<td>
-														{item.amount} {item.unit}
-													</td>
-													<td>
-														{item.amount * 2} {item.unit}
-													</td>
+													<td>{portion(item)}</td>
 												</tr>
 											);
 										})}
-										{grams !== null && (
-											<tr>
-												<th>合計</th>
-												<td>{grams} g</td>
-												<td>{grams * 2} g</td>
-											</tr>
-										)}
 									</tbody>
 								</table>
 								<ol>
