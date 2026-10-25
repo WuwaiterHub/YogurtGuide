@@ -1,10 +1,31 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { numberedStrains } from '../data/numbered-strains';
 
 const base = import.meta.env.BASE_URL;
+
+// 各單元的數量在建置時算出來，新增內容不用改這一頁。
+const published = (entry: { data: { draft?: boolean } }) => !entry.data.draft;
+const count = async (name: Parameters<typeof getCollection>[0]) =>
+	(await getCollection(name)).filter((entry) => published(entry as { data: { draft?: boolean } })).length;
+
+const sections = [
+	{ href: 'batches/', name: '批次實驗', note: `${await count('batches')} 筆自己做的優格紀錄：溫度、時間、食材、成品評分與照片。` },
+	{ href: 'cultures/', name: '優格種類', note: `${await count('cultures')} 種優格與發酵乳的來源、菌相與製作條件。` },
+	{ href: 'powders/', name: '菌粉', note: `${await count('starterPowders')} 款市售發酵菌粉的包裝、菌種、發酵溫度與時間。` },
+	{ href: 'cultures/species/', name: '菌種與菌株', note: `常見菌種的適合溫度與特色，以及 ${numberedStrains.length} 株有編號的菌株。` },
+	{ href: 'pairing/', name: '搭配', note: `${await count('overnightOats')} 種隔夜燕麥優格，以及食材、益生元與其他吃法。` },
+	{ href: 'market/', name: '市售優格', note: `${await count('marketYogurts')} 款市售優格的成分與菌種。` },
+	{ href: 'methods/', name: '製法', note: `${await count('methods')} 種製法的控制點與適用情境。` },
+	{ href: 'glossary/', name: '詞彙', note: `${await count('glossary')} 個常用術語，附英文。` },
+];
+
+// 最後更新日期＝這次建置的日期（台灣時間）。
+const updatedAt = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Taipei' }).format(new Date());
 ---
 
-<BaseLayout title="關於" description="YogurtGuide 的定位與紀錄方法。">
+<BaseLayout title="關於" description="YogurtGuide 的定位、內容、資料來源、健康聲明與回報方式。">
 	<section class="section">
 		<div class="wrap">
 			<h1 class="page-title">關於<span class="en-sub">About</span></h1>
@@ -18,6 +39,16 @@ const base = import.meta.env.BASE_URL;
 					<li>不同<strong>菌種/菌株（species / strain）</strong>的角色與來源</li>
 					<li>不同<strong>製法（process method）</strong>的控制點與適用情境</li>
 					<li>每次<strong>批次實驗（batch log）</strong>的參數、觀察與下次調整</li>
+				</ul>
+				<h2>網站有什麼</h2>
+				<ul>
+					{
+						sections.map((section) => (
+							<li>
+								<a href={`${base}${section.href}`}>{section.name}</a>：{section.note}
+							</li>
+						))
+					}
 				</ul>
 				<h2>批次必記三項（Batch Record）</h2>
 				<ul>
@@ -33,10 +64,30 @@ const base = import.meta.env.BASE_URL;
 					<li>正文以中文撰寫；專業術語附英文，例如發酵（fermentation）。</li>
 				</ul>
 
+				<h2>資料怎麼來、怎麼看</h2>
+				<ul>
+					<li>
+						<strong>來源</strong>：品牌官網、包裝實拍、商品頁說明與公開文獻。菌粉的規格與發酵溫度、時間以包裝背面為準；包裝與官網不同時，以較新的包裝為準。
+					</li>
+					<li>
+						<strong>價格</strong>：只寫金額、幣別、單位與查詢日期，不放店名與購買連結。價格會變動，只當參考。
+					</li>
+					<li>
+						<strong>沒有評價資訊／沒有菌種資訊</strong>：代表這次查不到可信的來源，不代表產品不好或沒有菌。
+					</li>
+					<li>
+						<strong>菌名</strong>：統一用台灣常見譯名；學名依最新分類，舊名寫在旁邊。包裝寫的「40 菌」「100 菌」多半是銷售說法，不一定等於實際菌株數。
+					</li>
+					<li>
+						<strong>時效</strong>：配方、包裝與價格都會改。每筆資料以標示的日期為準，購買前請看實際包裝。
+					</li>
+				</ul>
 
+				<h2>健康聲明</h2>
 				<p>
-					<a href={`${base}privacy/`}>隱私權宣告</a>說明網站不收集個人資料，以及 App 上架後的本機紀錄與 Google Drive 備份。
+					本站內容是發酵實作與公開資料的整理，僅供參考，<strong>不是醫療或營養建議</strong>。益生菌、益生元與纖維的效果因人而異，也取決於菌株與劑量。懷孕、哺乳、免疫力低下、正在服藥或有腸胃疾病的人，請先詢問醫師或營養師。自製優格請注意器具清潔與保存，成品有異味、變色，或長毛（Viili 這類本來就含黴菌的菌種除外），就不要食用。
 				</p>
+
 				<h2>最後的說明</h2>
 				<ul>
 					<li>很多人會接觸優格，無非就是為了健康</li>
@@ -45,6 +96,29 @@ const base = import.meta.env.BASE_URL;
 					<li>所以我個人是比較推薦 除了鮮奶以外，也可以增加奶粉當作來源</li>
 					<li>營養價值沒有差別，而且好存放 也比較便宜</li>
 				</ul>
+
+				<h2>隱私、授權與 App</h2>
+				<ul>
+					<li>
+						<a href={`${base}privacy/`}>隱私權宣告</a>：網站不收集個人資料；說明 App 上架後的本機紀錄與 Google Drive 備份。
+					</li>
+					<li>
+						<a href={`${base}licenses/`}>開放原始碼授權</a>：網站與 App 使用的開放原始碼套件與授權全文。
+					</li>
+					<li>
+						<strong>Android App</strong>：內容和網站相同，可離線瀏覽。網站更新後，App 會在背景下載新內容，下次開啟就會看到，不必重新下載 App。
+					</li>
+				</ul>
+
+				<h2>回報錯誤與補充資訊</h2>
+				<p>
+					看到錯字、資料過時，或手上有菌粉包裝、批次心得、市售優格成分可以補充，歡迎透過
+					<a href="https://www.instagram.com/yogurtguide" target="_blank" rel="noopener noreferrer">Instagram</a> 或
+					<a href="https://www.threads.com/@yogurtguide" target="_blank" rel="noopener noreferrer">Threads</a>
+					私訊。包裝照片請盡量拍到正面與背面的配料表、發酵方法。
+				</p>
+
+				<p class="meta">最後更新：{updatedAt}</p>
 			</div>
 		</div>
 	</section>
