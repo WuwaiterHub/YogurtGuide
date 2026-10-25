@@ -12,5 +12,7 @@ const forApp = process.env.CAP_BUILD === '1';
 export default defineConfig({
 	site: officialSite,
 	base: onCloudflare || forApp ? '/' : '/YogurtGuide/',
-	integrations: onCloudflare ? [sitemap()] : [],
+	// App 版另外輸出到 dist-app，不會蓋掉網站的 dist。
+	outDir: forApp ? './dist-app' : './dist',
+	integrations: onCloudflare && !forApp ? [sitemap()] : [],
 });

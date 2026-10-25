@@ -6,6 +6,7 @@ channels:
   - "taobao"
 packSize: "1 克 × 10 小包"
 contents: "麥芽糊精"
+temperature: "43°C"
 fermentTime: "8–10 小時，天冷可延到 12 小時"
 strains:
   - name: "保加利亞乳桿菌"
@@ -25,6 +26,11 @@ priceAsOf: "2026-10-20"
 priceNote: "商品頁標價。生產日期欄很舊，價格未必仍有效。"
 reviewTier: "none"
 review: "這次沒有抄到留言原文。"
+packImage: "powders/chuanxiu-bifido-10.jpg"
+packCaption: "外袋正面"
+packImages:
+  - src: "powders/chuanxiu-bifido-10-back.jpg"
+    caption: "外袋背面"
 sortOrder: 330
 draft: false
 ---

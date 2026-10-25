@@ -1,8 +1,15 @@
 {
   "appId": "com.wuwaiter.yogurtguide",
   "appName": "YogurtGuide",
-  "webDir": "dist",
+  "webDir": "dist-app",
   "server": {
     "androidScheme": "https"
+  },
+  "plugins": {
+    "LiveUpdate": {
+      "readyTimeout": 10000,
+      "autoDeleteBundles": true,
+      "autoBlockRolledBackBundles": true
+    }
   }
 }

@@ -7,6 +7,11 @@
 - 包裝圖可放多張（`packImages`），一次只顯示一張，左右箭頭切換。沒有圖時只顯示「本輪未取得包裝圖」，不再多一行「包裝」。App JSON 多一個 `imageUrls`。
 - 菌粉的「規格」只列包裝（每包克數 × 包數）、內容物、發酵溫度、發酵時間，有資料才顯示。原本的 `spec` 說明文字拆成 `packSize`、`contents`、`temperature`、`fermentTime`，來源與通路說明不再出現在頁面與 App JSON。
 - 「菌種與菌株」頁的核心種、附加／機能菌、常溫發酵相關、常見編號菌株四個表格統一為「名稱／學名／適合溫度／特色／說明」五欄；舊名移到學名下方，編號菌株的定位與來源連結併入說明欄。「依是否含酵母/真菌分類」移到最下方改為備註。內容不增刪。
+- 菌粉圖片下方的圖說（外袋正面／背面）與頁碼（1 / 2）改為一起置中在圖片下方。
+- 新增「開放原始碼授權」頁 `/licenses/`（頁尾連結），列出網站與 App 打包的 MIT 套件：StPageFlip、Capacitor、@capacitor/app、@capawesome/capacitor-live-update，附著作權與授權全文。翻頁時間放慢為 1.4 秒，改從右下角翻、陰影加深；翻起來的紙背改成紙色，只透出淡淡的反向印刷（原本會看到同一張圖滑走）。
+- 菌粉包裝圖切換改用 StPageFlip（`page-flip`，MIT）做紙張捲曲的翻書效果，單頁顯示、帶陰影，也能用手指從角落拖著翻；左右箭頭可循環。系統開啟「減少動態效果」時直接換頁。網站與 Android App 共用。
+- 菌粉加上實拍包裝照（正面＋背面，轉正並統一為 900×1200）：川秀 16 菌（新增）、60 菌、100 菌、老酸奶 7 菌、雙歧 10 菌，優比特 50、300 億、500 億。依包裝背面補上發酵溫度、時間、內容物：川秀 43°C；優比特 42°C（50 為 8–12 小時、300 億 6–8 小時、500 億 4–6 小時）。川秀 60 菌、100 菌的內容物依新包裝改為脫脂奶粉／脫脂乳粉。
+- Android App 加入 Live Update（`@capawesome/capacitor-live-update`，自架）：`check:deploy` 最後把 App 版（輸出到 `dist-app/`）壓成 `dist/app-bundle/<commit>.zip`，附 SHA-256 與 `latest.json`。App 啟動時比對 `/build.json` 與線上 `latest.json`，有新版就背景下載、下次開 App 生效；10 秒內沒呼叫 `ready()` 會自動退回上一版。`nativeBuild` 擋住需要新原生層的網頁包。網站、菌粉等內容更新不必重新上架。
 - 加入 Capacitor 8 與 `android/` 專案，把網站包成 Android App。新增 `npm run app:sync`、`app:debug`、`app:bundle`（gradlew 由 `scripts/build-app.mjs` 以完整路徑呼叫）；App 版建置 `base` 為 `/`，並把站內資料夾式連結改寫成 `index.html`（Capacitor 不會自動對應）。release 簽章讀 `android/key.properties`。`.gitignore` 排除 `*.jks`、`*.keystore`、`android/key.properties`，保留 `gradle-wrapper.jar`；`check:gitignore` 也檢查前兩項。
 - 搭配頁的隔夜燕麥範本拿掉「人份／冷藏／小時」與「×2」欄，改為「食材／份量」；份量可留白或寫範圍（`amountMax`）。原食譜改名「基本款」並換成新配方，新增「小山園抹茶杯」（作者 mukoo0630，份量暫不寫）。App 的 `overnight-oats.json` 拿掉 `servings`、`soakHours`，食材多 `amountMax`，份量不明時 `amount` 為 null。
 - 菌粉頁把少於 3 款的品牌（BHK、布布優格、普羅拜爾、里仁、喜又美、米森）併成最後的「其它」，品牌說明改放在各卡片標題下。

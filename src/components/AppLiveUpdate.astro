@@ -1,0 +1,63 @@
+---
+// App 專用：啟動時檢查有沒有新的網頁包。只在 CAP_BUILD=1 的建置被 BaseLayout 引入。
+---
+
+<script>
+	import { App } from '@capacitor/app';
+	import { Capacitor } from '@capacitor/core';
+	import { LiveUpdate } from '@capawesome/capacitor-live-update';
+	import { platformPlan } from '../config/platforms';
+
+	interface LatestBundle {
+		bundleId: string;
+		url: string;
+		checksum: string;
+		minNativeBuild: number;
+	}
+
+	const checkedKey = 'yogurtguide.liveUpdateChecked';
+
+	async function readJson<T>(url: string): Promise<T | null> {
+		try {
+			const response = await fetch(url, { cache: 'no-store' });
+			return response.ok ? ((await response.json()) as T) : null;
+		} catch {
+			return null;
+		}
+	}
+
+	async function checkForUpdate() {
+		if (!Capacitor.isNativePlatform()) return;
+		// 告訴外掛這一版能正常開啟；10 秒內沒呼叫就退回上一版。
+		await LiveUpdate.ready();
+
+		// 同一次開 App 只檢查一次，換頁不重複檢查。
+		if (sessionStorage.getItem(checkedKey)) return;
+		sessionStorage.setItem(checkedKey, '1');
+
+		const own = await readJson<{ commit: string }>('/build.json');
+		const latest = await readJson<LatestBundle>(`${platformPlan.liveUpdateUrl}?t=${Date.now()}`);
+		if (!latest?.bundleId || latest.bundleId === own?.commit) return;
+
+		const info = await App.getInfo();
+		if (Number(info.build) < latest.minNativeBuild) return;
+
+		const { bundleId: next } = await LiveUpdate.getNextBundle();
+		if (next === latest.bundleId) return;
+
+		const { bundleIds } = await LiveUpdate.getBundles();
+		if (!bundleIds.includes(latest.bundleId)) {
+			await LiveUpdate.downloadBundle({
+				bundleId: latest.bundleId,
+				url: latest.url,
+				checksum: latest.checksum,
+			});
+		}
+		// 下次開 App 才換新版，避免使用者看到一半畫面跳掉。
+		await LiveUpdate.setNextBundle({ bundleId: latest.bundleId });
+	}
+
+	checkForUpdate().catch(() => {
+		// 檢查失敗（沒網路等）就用手機裡現有的版本，不打擾使用者。
+	});
+</script>

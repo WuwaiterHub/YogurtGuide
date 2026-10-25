@@ -40,6 +40,7 @@ npx astro dev --background
 1. `git commit` 會跑 `npm run test:ci`。失敗就不能 commit。
 2. `git push` 會跑 gitignore 檢查與安全掃描。失敗就不能 push。
 3. 推到 `main` 之後，GitHub Actions 部署 GitHub Pages。Cloudflare 用自己的 Git 連線建置，並部署到正式網址。兩邊都跑 `npm run check:deploy`。
-4. `deploy.yml` 最後的 `verify-cloudflare` 每分鐘讀一次正式網站的 `/build.json`，最多 15 分鐘。裡面的 commit 和這次 push 不同就失敗，代表 Cloudflare 可能沒收到 push。
+4. `check:deploy` 最後會建 App 版網頁包，放在正式網站的 `/app-bundle/`。Android App 啟動時檢查 `latest.json`，有新版就在背景下載，下次開 App 換上，不必重新上架。
+5. `deploy.yml` 最後的 `verify-cloudflare` 每分鐘讀一次正式網站的 `/build.json`，最多 15 分鐘。裡面的 commit 和這次 push 不同就失敗，代表 Cloudflare 可能沒收到 push。
 
 不要把 Cloudflare API token 放進 GitHub。部署結果看 GitHub 的 Actions，以及 Cloudflare 的 Workers 建置紀錄。

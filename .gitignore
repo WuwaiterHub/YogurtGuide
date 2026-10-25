@@ -32,6 +32,7 @@ htmlcov/
 # 建置產物
 build/
 dist/
+dist-app/
 *.egg
 *.egg-info/
 wheels/

@@ -5,7 +5,8 @@ productName: "乳酸菌60菌"
 channels:
   - "taobao"
 packSize: "1 克 × 10 小包"
-contents: "麥芽糊精"
+contents: "脫脂奶粉"
+temperature: "43°C"
 fermentTime: "8–10 小時，天冷可延到 12 小時"
 strains:
   - name: "保加利亞乳桿菌"
@@ -39,6 +40,11 @@ priceAsOf: "2026-10-20"
 priceNote: "跟 5 菌同一頁的 CN¥6.90，對不到單獨一包 60 菌。其他商城另見約 CN¥10.8／10 克。"
 reviewTier: "none"
 review: "同頁留言寫的是 5 菌選項，不計入這款。"
+packImage: "powders/chuanxiu-lab-60.jpg"
+packCaption: "外袋正面"
+packImages:
+  - src: "powders/chuanxiu-lab-60-back.jpg"
+    caption: "外袋背面"
 sortOrder: 370
 draft: false
 ---

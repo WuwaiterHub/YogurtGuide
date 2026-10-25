@@ -119,16 +119,23 @@ const base = import.meta.env.BASE_URL;
 											</figure>
 										) : (
 											<figure class="powder-shot" data-carousel>
-												{packImages(data).map((image, index) => (
-													<div class="powder-slide" hidden={index > 0}>
-														<img
-															src={`${base}${image.src}`}
-															alt={`${data.brand} ${data.productName} 包裝 ${index + 1}`}
-															loading="lazy"
-														/>
-														<figcaption>{image.caption ?? '包裝'}</figcaption>
-													</div>
-												))}
+												<div class:list={['powder-book', { 'powder-book--flip': packImages(data).length > 1 }]}>
+													{packImages(data).map((image, index) => (
+														<div class="powder-page" data-caption={image.caption ?? '包裝'}>
+															<img
+																src={`${base}${image.src}`}
+																alt={`${data.brand} ${data.productName} 包裝 ${index + 1}`}
+																loading={index === 0 ? 'lazy' : 'eager'}
+															/>
+														</div>
+													))}
+												</div>
+												<figcaption class="powder-book__caption">
+													<span class="powder-book__label">{packImages(data)[0].caption ?? '包裝'}</span>
+													{packImages(data).length > 1 && (
+														<span class="powder-count">1 / {packImages(data).length}</span>
+													)}
+												</figcaption>
 												{packImages(data).length > 1 && (
 													<>
 														<button class="powder-nav powder-nav--prev" type="button" data-step="-1" aria-label="上一張">
@@ -137,7 +144,6 @@ const base = import.meta.env.BASE_URL;
 														<button class="powder-nav powder-nav--next" type="button" data-step="1" aria-label="下一張">
 															›
 														</button>
-														<span class="powder-count">1 / {packImages(data).length}</span>
 													</>
 												)}
 											</figure>
@@ -181,16 +187,68 @@ const base = import.meta.env.BASE_URL;
 </BaseLayout>
 
 <script>
-	document.addEventListener('click', (event) => {
-		const button = (event.target as HTMLElement).closest<HTMLButtonElement>('.powder-nav');
-		if (!button) return;
-		const carousel = button.closest('[data-carousel]');
-		if (!carousel) return;
-		const slides = [...carousel.querySelectorAll<HTMLElement>('.powder-slide')];
-		const current = slides.findIndex((slide) => !slide.hidden);
-		const next = (current + Number(button.dataset.step) + slides.length) % slides.length;
-		slides.forEach((slide, index) => (slide.hidden = index !== next));
+	// 多張包裝圖用 StPageFlip 做翻書效果：紙張會捲曲、帶陰影，也能用手指從右下角拖著翻。
+	// 網站與 Android App（WebView）共用；系統設定「減少動態效果」時直接換頁、不播動畫。
+	import { PageFlip } from 'page-flip';
+
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+	for (const carousel of document.querySelectorAll<HTMLElement>('[data-carousel]')) {
+		const book = carousel.querySelector<HTMLElement>('.powder-book--flip');
+		if (!book) continue;
+		const pages = [...book.querySelectorAll<HTMLElement>('.powder-page')];
+		const caption = carousel.querySelector('.powder-book__label');
 		const count = carousel.querySelector('.powder-count');
-		if (count) count.textContent = `${next + 1} / ${slides.length}`;
-	});
+
+		// 頁面大小和圖片框一樣（3:4，高 11rem）。
+		const height = Math.round(parseFloat(getComputedStyle(document.documentElement).fontSize) * 11);
+		const flipbook = new PageFlip(book, {
+			width: Math.round((height * 3) / 4),
+			height,
+			size: 'fixed',
+			// 不讓套件把外框撐成雙頁寬，維持單頁（直式）顯示。
+			autoSize: false,
+			usePortrait: true,
+			showCover: false,
+			flippingTime: 1400,
+			maxShadowOpacity: 0.7,
+			mobileScrollSupport: true,
+		});
+		flipbook.loadFromHTML(pages);
+
+		// 單頁模式往後翻時，套件會複製目前這頁當「翻起來的紙」。把複本標成紙背，CSS 讓它只透出淡淡的反向印刷。
+		new MutationObserver((records) => {
+			for (const record of records) {
+				for (const node of record.addedNodes) {
+					if (node instanceof HTMLElement && node.classList.contains('powder-page') && !pages.includes(node)) {
+						node.classList.add('powder-page--back');
+					}
+				}
+			}
+		}).observe(book.querySelector('.stf__block') ?? book, { childList: true, subtree: true });
+
+		flipbook.on('flip', (event: { data: number }) => {
+			const index = event.data;
+			if (caption) caption.textContent = pages[index].dataset.caption ?? '包裝';
+			if (count) count.textContent = `${index + 1} / ${pages.length}`;
+		});
+
+		for (const button of carousel.querySelectorAll<HTMLButtonElement>('.powder-nav')) {
+			button.addEventListener('click', () => {
+				const step = Number(button.dataset.step);
+				const current = flipbook.getCurrentPageIndex();
+				const target = (current + step + pages.length) % pages.length;
+				if (reduceMotion.matches) flipbook.turnToPage(target);
+				// 從右下角翻，像用手捏著書角往上翻。
+				else if (step > 0 && target > current) flipbook.flipNext('bottom');
+				else if (step < 0 && target < current) flipbook.flipPrev('bottom');
+				else flipbook.flip(target, 'bottom');
+				// turnToPage 不會觸發 flip 事件，自己更新。
+				if (reduceMotion.matches) {
+					if (caption) caption.textContent = pages[target].dataset.caption ?? '包裝';
+					if (count) count.textContent = `${target + 1} / ${pages.length}`;
+				}
+			});
+		}
+	}
 </script>

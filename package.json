@@ -15,20 +15,25 @@
     "test:ci": "node scripts/ci-require-tests.mjs",
     "check:gitignore": "node scripts/ci-check-gitignore.mjs",
     "check:security": "node scripts/ci-check-security.mjs",
-    "check:deploy": "npm run check:gitignore && npm run check:security && npm run test:ci && npm run build",
-    "app:sync": "node scripts/build-app.mjs",
+    "check:deploy": "npm run check:gitignore && npm run check:security && npm run test:ci && npm run build && npm run app:publish",
+    "app:sync": "node scripts/build-app.mjs --sync",
+    "app:publish": "node scripts/build-app.mjs --publish",
     "app:debug": "node scripts/build-app.mjs --debug",
     "app:bundle": "node scripts/build-app.mjs --bundle",
     "prepare": "husky"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.3",
+    "@capacitor/app": "^8.1.2",
     "@capacitor/core": "^8.5.3",
-    "astro": "^7.1.4"
+    "@capawesome/capacitor-live-update": "^8.7.1",
+    "astro": "^7.1.4",
+    "page-flip": "^2.0.7"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@capacitor/cli": "^8.5.3",
+    "fflate": "^0.8.3",
     "husky": "^9.1.7",
     "wrangler": "4.143.0"
   }

@@ -654,6 +654,47 @@ main > .section:first-child > .wrap > .page-title:first-child .en-sub {
 	position: relative;
 }
 
+/* 多張圖時是一本只顯示單頁的小書，寬高和圖片框一致（3:4、高 11rem），置中。 */
+.powder-book--flip {
+	width: 8.25rem;
+	height: 11rem;
+	margin: 0 auto;
+}
+
+.powder-page {
+	background: var(--paper);
+}
+
+.powder-book--flip .powder-page img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* 翻起來的紙背：紙色帶一點陰影，只透出淡淡的反向印刷，像真的紙。 */
+.powder-book--flip .powder-page--back {
+	background: linear-gradient(to left, #e4e0d4 0%, var(--paper) 40%, var(--paper) 100%);
+}
+
+.powder-book--flip .powder-page--back img {
+	transform: scaleX(-1);
+	opacity: 0.12;
+}
+
+/* 圖說與頁碼一起置中在圖片下方，例如「外袋正面　1 / 2」。 */
+.powder-book__caption {
+	display: flex;
+	justify-content: center;
+	gap: 0.75rem;
+	margin-top: 0.4rem;
+	font-size: 0.82rem;
+	color: var(--ink-muted);
+	text-align: center;
+}
+
+/* 箭頭與頁碼要蓋在翻頁的紙張上面。 */
+.powder-nav,
+
 .powder-nav {
 	position: absolute;
 	top: calc(0.55rem + 5.5rem);
@@ -677,13 +718,11 @@ main > .section:first-child > .wrap > .page-title:first-child .en-sub {
 	right: 0.8rem;
 }
 
-.powder-count {
-	position: absolute;
-	right: 0.6rem;
-	bottom: 0.45rem;
-	font-size: 0.78rem;
-	color: var(--ink-muted);
+/* 箭頭要蓋在翻頁的紙張上面。 */
+.powder-nav {
+	z-index: 30;
 }
+
 
 .powder-shot img {
 	display: block;
@@ -968,4 +1007,12 @@ main > .section:first-child > .wrap > .page-title:first-child .en-sub {
 .field-note-full {
 	margin-top: 2rem;
 	padding-top: 0.5rem;
+}
+
+.license-text {
+	white-space: pre-wrap;
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	line-height: 1.5;
+	color: var(--ink-muted);
 }
