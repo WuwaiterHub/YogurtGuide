@@ -2,6 +2,12 @@
 brand: "福樂"
 productName: "頂級無加糖希臘式優酪"
 recommendationStars: 0
+energyKcalPer100: 85
+proteinPer100: 5.4
+fatPer100: 4.2
+carbPer100: 6.5
+sugarPer100: 6.4
+nutritionBasis: "100g"
 milkBase: "mixed"
 milkBaseNote: "水＋乳粉＋鮮乳"
 addedSugar: false

@@ -2,6 +2,12 @@
 brand: "質立"
 productName: "希臘式優格（無加糖）"
 recommendationStars: 0
+energyKcalPer100: 114
+proteinPer100: 4
+fatPer100: 5
+carbPer100: 13.2
+sugarPer100: 8.3
+nutritionBasis: "100g"
 milkBase: "powder"
 milkBaseNote: "水+奶粉"
 addedSugar: false

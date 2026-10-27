@@ -2,6 +2,9 @@
 brand: "雪坊"
 productName: "6 號精品優格"
 recommendationStars: 1
+energyKcalPer100: 63.6
+sugarPer100: 2.6
+nutritionBasis: "100g"
 milkBase: "fresh"
 milkBaseNote: "鮮奶"
 addedSugar: false

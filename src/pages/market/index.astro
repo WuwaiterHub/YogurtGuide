@@ -7,11 +7,22 @@ const yogurts = (await getCollection('marketYogurts', ({ data }) => !data.draft)
 );
 const recommended = yogurts.filter((y) => y.data.recommendationStars > 0);
 const others = yogurts.filter((y) => y.data.recommendationStars === 0);
+
+type Yogurt = (typeof yogurts)[number]['data'];
+
+/** 熱量／蛋白質／脂肪／碳水／糖，查不到的寫「—」；全部查不到就寫「沒有營養標示資訊」。 */
+function nutritionLine(data: Yogurt) {
+	const values = [data.energyKcalPer100, data.proteinPer100, data.fatPer100, data.carbPer100, data.sugarPer100];
+	if (values.every((value) => value === undefined)) return '沒有營養標示資訊';
+	const show = (value: number | undefined, unit: string) => (value === undefined ? '—' : `${value} ${unit}`);
+	const basis = data.nutritionBasis === '100ml' ? '100 ml' : '100 g';
+	return `每 ${basis}：熱量 ${show(data.energyKcalPer100, 'kcal')}・蛋白質 ${show(data.proteinPer100, 'g')}・脂肪 ${show(data.fatPer100, 'g')}・碳水 ${show(data.carbPer100, 'g')}・糖 ${show(data.sugarPer100, 'g')}`;
+}
 ---
 
 <BaseLayout
 	title="市售優格"
-	description="台灣常見市售優格：乳源、加糖、添加物與菌種清單；★ 為推薦，★★ 為最推薦。"
+	description="台灣常見市售優格：乳源、加糖、添加物、蛋白質與脂肪、菌種清單；依成分與營養標示給 ★ 到 ★★★。"
 >
 	<section class="section">
 		<div class="wrap">
@@ -22,29 +33,42 @@ const others = yogurts.filter((y) => y.data.recommendationStars === 0);
 
 			<section class="record-block" id="recommend-rule">
 				<h2 class="record-block__title">推薦符號 ★ 的條件</h2>
-				<p>
-					成品成分<strong>只能</strong>有：
-				</p>
+				<h3 class="section-kicker">★ 一顆星</h3>
+				<p>成分<strong>只能</strong>有：</p>
 				<ul>
-					<li>鮮乳/生乳，或</li>
-					<li>奶粉＋水，以及</li>
-					<li>菌種（含凍乾菌粉常見載體：乳糖、寡糖粉、麥芽糊精、澱粉等）</li>
+					<li>鮮乳／生乳</li>
+					<li>奶粉＋水</li>
+					<li>菌種</li>
+					<li>菌種載體：乳糖、寡糖粉、麥芽糊精、奶粉（含澱粉的不算，例如玉米澱粉）</li>
+					<li>益生元（如菊苣纖維、半乳寡糖）</li>
 				</ul>
 				<p class="meta">
-					不得另有：加糖、果膠/洋菜等膠體、香料、色素、纖維添加、濃縮乳蛋白、乳清蛋白（作增稠）等。
+					不得另有：加糖、果膠／洋菜等膠體、香料、色素、纖維添加、濃縮乳蛋白、乳清蛋白（作增稠）等。
 				</p>
-				<p class="meta"><strong>★★ 兩顆星的為最推薦。</strong></p>
+				<h3 class="section-kicker">★★ 兩顆星</h3>
+				<ul>
+					<li>符合一顆星的所有條件</li>
+					<li>蛋白質 7 g／100 ml 以上</li>
+				</ul>
+				<h3 class="section-kicker">★★★ 三顆星</h3>
+				<ul>
+					<li>符合一顆星的所有條件</li>
+					<li>蛋白質 7 g／100 ml 以上</li>
+					<li>脂肪 3 g／100 ml 以下</li>
+					<li>碳水化合物 5 g／100 ml 以下，或糖 3 g／100 ml 以下</li>
+				</ul>
+				<p class="meta">營養數字依包裝的營養標示；標示以每 100 g 計時，直接當作每 100 ml 比較。查不到營養標示的，最多給一顆星。</p>
 			</section>
 
 			<section class="record-block">
-				<h2 class="record-block__title">★/★★ 符合推薦條件（{recommended.length}）</h2>
+				<h2 class="record-block__title">符合推薦條件（{recommended.length}）</h2>
 				{
 					recommended.map(({ id, data }) => (
 						<article class="market-card market-card--star" id={id}>
 							<h3 class="market-card__title">
 								<span
 									class="market-card__star"
-									aria-label={data.recommendationStars === 2 ? '最推薦' : '推薦'}
+									aria-label={['', '推薦', '更推薦', '最推薦'][data.recommendationStars]}
 								>{'★'.repeat(data.recommendationStars)}</span>
 								{data.brand} {data.productName}
 							</h3>
@@ -65,6 +89,10 @@ const others = yogurts.filter((y) => y.data.recommendationStars === 0);
 									<tr>
 										<th>加糖</th>
 										<td>{data.addedSugar ? '有加糖' : '無加糖'}</td>
+									</tr>
+									<tr>
+										<th>營養標示</th>
+										<td>{nutritionLine(data)}</td>
 									</tr>
 									<tr>
 										<th>其它添加物</th>
@@ -104,6 +132,10 @@ const others = yogurts.filter((y) => y.data.recommendationStars === 0);
 									<tr>
 										<th>加糖</th>
 										<td>{data.addedSugar ? '有加糖' : '無加糖'}</td>
+									</tr>
+									<tr>
+										<th>營養標示</th>
+										<td>{nutritionLine(data)}</td>
 									</tr>
 									<tr>
 										<th>其它添加物</th>

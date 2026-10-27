@@ -115,7 +115,14 @@ const marketYogurts = defineCollection({
 	schema: z.object({
 		brand: z.string(),
 		productName: z.string(),
-		recommendationStars: z.number().int().min(0).max(2).default(0),
+		recommendationStars: z.number().int().min(0).max(3).default(0),
+		// 營養標示（每 100 g 或每 100 ml，見 nutritionBasis）。二、三星依蛋白質、脂肪、碳水或糖判斷。
+		energyKcalPer100: z.number().nonnegative().optional(),
+		proteinPer100: z.number().nonnegative().optional(),
+		fatPer100: z.number().nonnegative().optional(),
+		carbPer100: z.number().nonnegative().optional(),
+		sugarPer100: z.number().nonnegative().optional(),
+		nutritionBasis: z.enum(['100g', '100ml']).optional(),
 		milkBase: z.enum(['fresh', 'powder', 'mixed', 'other']),
 		milkBaseNote: z.string(),
 		addedSugar: z.boolean().default(false),

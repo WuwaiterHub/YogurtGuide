@@ -2,6 +2,12 @@
 brand: "林鳳營"
 productName: "希臘式優格（無加糖）"
 recommendationStars: 0
+energyKcalPer100: 83
+proteinPer100: 6.1
+fatPer100: 4
+carbPer100: 5.6
+sugarPer100: 4.7
+nutritionBasis: "100g"
 milkBase: "mixed"
 milkBaseNote: "水＋生乳＋乳粉"
 addedSugar: false

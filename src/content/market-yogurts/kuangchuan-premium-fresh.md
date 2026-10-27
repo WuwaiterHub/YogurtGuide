@@ -2,6 +2,12 @@
 brand: "光泉"
 productName: "頂級鮮奶優酪"
 recommendationStars: 1
+energyKcalPer100: 62.2
+proteinPer100: 3.3
+fatPer100: 3.4
+carbPer100: 4.6
+sugarPer100: 3.3
+nutritionBasis: "100g"
 milkBase: "fresh"
 milkBaseNote: "鮮奶/生乳"
 addedSugar: false

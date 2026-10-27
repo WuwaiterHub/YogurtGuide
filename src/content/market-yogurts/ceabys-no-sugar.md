@@ -2,6 +2,12 @@
 brand: "雪比"
 productName: "無加糖生優格"
 recommendationStars: 1
+energyKcalPer100: 63
+proteinPer100: 3.2
+fatPer100: 3.7
+carbPer100: 4.7
+sugarPer100: 4.5
+nutritionBasis: "100g"
 milkBase: "fresh"
 milkBaseNote: "生乳"
 addedSugar: false

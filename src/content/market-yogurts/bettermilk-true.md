@@ -2,6 +2,12 @@
 brand: "鮮乳坊"
 productName: "真優格"
 recommendationStars: 1
+energyKcalPer100: 65.8
+proteinPer100: 3.5
+fatPer100: 3.8
+carbPer100: 4.4
+sugarPer100: 3.4
+nutritionBasis: "100g"
 milkBase: "fresh"
 milkBaseNote: "生乳 (豐樂牧場)"
 addedSugar: false

@@ -1,7 +1,10 @@
 ---
 brand: "心樸"
 productName: "100%鮮乳優格"
-recommendationStars: 2
+recommendationStars: 1
+energyKcalPer100: 66.3
+sugarPer100: 4.3
+nutritionBasis: "100g"
 milkBase: "fresh"
 milkBaseNote: "鮮奶"
 addedSugar: false

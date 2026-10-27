@@ -1,7 +1,13 @@
 ---
 brand: "福樂"
 productName: "頂級鮮奶優酪"
-recommendationStars: 2
+recommendationStars: 1
+energyKcalPer100: 61
+proteinPer100: 3
+fatPer100: 3.6
+carbPer100: 4.1
+sugarPer100: 3.9
+nutritionBasis: "100g"
 milkBase: "fresh"
 milkBaseNote: "鮮奶(一番鮮)"
 addedSugar: false
