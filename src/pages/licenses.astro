@@ -33,6 +33,43 @@ const packages = [
 	},
 ];
 
+// 放在 public/fonts/ 自架的英文字體。授權全文和字體檔放在一起（OFL.txt、LICENSE-Apache-2.0.txt）。
+const base = import.meta.env.BASE_URL;
+const fonts = [
+	{
+		name: 'Fraunces',
+		use: '標題',
+		copyright: 'Copyright 2018 The Fraunces Project Authors',
+		license: 'SIL Open Font License 1.1',
+		licenseFile: 'fonts/OFL.txt',
+		url: 'https://github.com/undercasetype/Fraunces',
+	},
+	{
+		name: 'Manrope',
+		use: '內文',
+		copyright: 'Copyright 2018 The Manrope Project Authors',
+		license: 'SIL Open Font License 1.1',
+		licenseFile: 'fonts/OFL.txt',
+		url: 'https://github.com/googlefonts/manrope',
+	},
+	{
+		name: 'IBM Plex Mono',
+		use: '數字、標籤',
+		copyright: 'Copyright © 2017 IBM Corp.（保留字體名稱「Plex」）',
+		license: 'SIL Open Font License 1.1',
+		licenseFile: 'fonts/OFL.txt',
+		url: 'https://github.com/IBM/plex',
+	},
+	{
+		name: 'Rock Salt',
+		use: '手寫風格的備註',
+		copyright: 'Font Diner',
+		license: 'Apache License 2.0',
+		licenseFile: 'fonts/LICENSE-Apache-2.0.txt',
+		url: 'https://fonts.google.com/specimen/Rock+Salt',
+	},
+];
+
 const mitText = `Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -56,7 +93,7 @@ SOFTWARE.`;
 	<section class="section">
 		<div class="wrap">
 			<h1 class="page-title">開放原始碼授權<span class="en-sub">Open Source Licenses</span></h1>
-			<p class="page-lead">網站與 Android App 使用了下列開放原始碼套件，皆為 MIT 授權。</p>
+			<p class="page-lead">網站與 Android App 使用了下列開放原始碼套件（皆為 MIT 授權）與字體。</p>
 			<table class="meta-table">
 				<thead>
 					<tr>
@@ -86,6 +123,37 @@ SOFTWARE.`;
 			<h2 class="section-kicker">MIT License</h2>
 			<p class="meta">上列每個套件的授權全文如下，著作權人見上表。</p>
 			<pre class="license-text">{mitText}</pre>
+
+			<h2 class="section-kicker">字體</h2>
+			<p class="meta">英文字體放在本站一起提供；中文用裝置內建字體，沒有另外載入。</p>
+			<table class="meta-table">
+				<thead>
+					<tr>
+						<th>字體</th>
+						<th>用途</th>
+						<th>著作權</th>
+						<th>授權</th>
+					</tr>
+				</thead>
+				<tbody>
+					{
+						fonts.map((item) => (
+							<tr>
+								<td>
+									<a href={item.url} target="_blank" rel="noopener noreferrer">
+										{item.name} ↗
+									</a>
+								</td>
+								<td>{item.use}</td>
+								<td>{item.copyright}</td>
+								<td>
+									<a href={`${base}${item.licenseFile}`}>{item.license}</a>
+								</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
 		</div>
 	</section>
 </BaseLayout>

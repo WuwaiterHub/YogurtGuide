@@ -26,8 +26,6 @@ priceAsOf: "2026-10-20"
 priceNote: "官網標價 NT$360，原價 NT$400。蝦皮有標題出現 MESO，但那條標價對到的是別款，不採用。"
 reviewTier: "web"
 review: "食力有品牌試用稿。討論區 2022-07 有人說家酪優常溫優格菌做成功。較早開箱寫口感清爽、不酸澀。"
-packImage: "powders/jarou-meso.jpg"
-packCaption: "外盒正面。這一面沒有印菌種表。"
 sortOrder: 30
 draft: false
 ---

@@ -4,7 +4,7 @@ brandSlug: "leezen"
 productName: "高優活 DIY 優格粉"
 channels: []
 packSize: "共 30 克，10 包"
-contents: "乳糖、濃縮乳清蛋白、阿拉伯膠、麥芽糊精、蔗糖、海藻糖、玉米澱粉、微晶纖維素、乳糖酶"
+contents: "乳糖、即溶濃縮乳清蛋白（含大豆卵磷脂）、阿拉伯膠、麥芽糊精、海藻糖、玉米澱粉、微晶纖維素、乳糖酶（含樹薯糊精）"
 temperature: "室溫；27°C 以下改用電鍋保溫"
 fermentTime: "室溫 20–24 小時；電鍋保溫 15–18 小時"
 strains:
@@ -13,7 +13,7 @@ strains:
   - name: "長雙歧桿菌"
   - name: "副乾酪乳桿菌"
   - name: "鼠李糖乳桿菌"
-  - name: "克菲爾乳桿菌"
+  - name: "羅伊氏乳桿菌"
   - name: "瑞士乳桿菌"
   - name: "保加利亞乳桿菌"
   - name: "醱酵乳桿菌"
@@ -26,6 +26,11 @@ priceOrigin: "official"
 priceAsOf: "2026-10-21"
 reviewTier: "none"
 review: "這次沒有找到獨立評價。"
+packImage: "powders/leezen-diy.jpg"
+packCaption: "外盒正面"
+packImages:
+  - src: "powders/leezen-diy-back.jpg"
+    caption: "外盒背面"
 sortOrder: 1110
 draft: false
 ---

@@ -19,8 +19,6 @@ priceAsOf: "2026-10-20"
 priceNote: "官網單盒 NT$560。蝦皮看到的是三盒約 NT$1,530–1,560。"
 reviewTier: "official"
 review: "官網自述：口感溫和順口、風味淡雅。這次沒有找到獨立評測原文。"
-packImage: "powders/jarou-28.jpg"
-packCaption: "外盒正面。這一面沒有印菌種表。"
 sortOrder: 20
 draft: false
 ---
