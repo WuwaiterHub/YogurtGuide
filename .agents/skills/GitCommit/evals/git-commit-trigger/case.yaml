@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: git-commit-trigger
+expected_outcome: |
+  要求 commit，應叫用 git-commit 並照分支與訊息格式

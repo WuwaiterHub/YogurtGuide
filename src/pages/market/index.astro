@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import PackShots from '../../components/PackShots.astro';
 
 const yogurts = (await getCollection('marketYogurts', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.recommendationStars - a.data.recommendationStars || a.data.sortOrder - b.data.sortOrder,
@@ -17,6 +18,11 @@ function nutritionLine(data: Yogurt) {
 	const show = (value: number | undefined, unit: string) => (value === undefined ? '—' : `${value} ${unit}`);
 	const basis = data.nutritionBasis === '100ml' ? '100 ml' : '100 g';
 	return `每 ${basis}：熱量 ${show(data.energyKcalPer100, 'kcal')}・蛋白質 ${show(data.proteinPer100, 'g')}・脂肪 ${show(data.fatPer100, 'g')}・碳水 ${show(data.carbPer100, 'g')}・糖 ${show(data.sugarPer100, 'g')}`;
+}
+
+function packImages(data: Yogurt) {
+	const first = data.packImage ? [{ src: data.packImage, caption: data.packCaption }] : [];
+	return [...first, ...data.packImages];
 }
 ---
 
@@ -72,6 +78,10 @@ function nutritionLine(data: Yogurt) {
 								>{'★'.repeat(data.recommendationStars)}</span>
 								{data.brand} {data.productName}
 							</h3>
+							<PackShots images={packImages(data)} alt={`${data.brand} ${data.productName}`}>
+								{/* 右邊的框先留空，之後決定放什麼資訊。 */}
+								<figure class="powder-shot" aria-hidden="true" />
+							</PackShots>
 							<table class="meta-table">
 								<tbody>
 									<tr>
@@ -119,6 +129,10 @@ function nutritionLine(data: Yogurt) {
 							<h3 class="market-card__title">
 								{data.brand} {data.productName}
 							</h3>
+							<PackShots images={packImages(data)} alt={`${data.brand} ${data.productName}`}>
+								{/* 右邊的框先留空，之後決定放什麼資訊。 */}
+								<figure class="powder-shot" aria-hidden="true" />
+							</PackShots>
 							<table class="meta-table">
 								<tbody>
 									<tr>

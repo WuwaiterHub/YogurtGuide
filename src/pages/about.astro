@@ -12,13 +12,13 @@ const count = async (name: Parameters<typeof getCollection>[0]) =>
 
 const sections = [
 	{ href: 'batches/', name: '批次實驗', note: `${await count('batches')} 筆自己做的優格紀錄：溫度、時間、食材、成品評分與照片。` },
+	{ href: 'cultures/species/', name: '菌種與菌株', note: `常見菌種的適合溫度與特色，以及 ${numberedStrains.length} 株有編號的菌株。` },
 	{ href: 'cultures/', name: '優格種類', note: `${await count('cultures')} 種優格與發酵乳的來源、菌相與製作條件。` },
 	{ href: 'powders/', name: '菌粉', note: `${await count('starterPowders')} 款市售發酵菌粉的包裝、菌種、發酵溫度與時間。` },
-	{ href: 'cultures/species/', name: '菌種與菌株', note: `常見菌種的適合溫度與特色，以及 ${numberedStrains.length} 株有編號的菌株。` },
 	{ href: 'pairing/', name: '搭配', note: `${await count('overnightOats')} 種隔夜燕麥優格，以及食材、益生元與其他吃法。` },
 	{ href: 'market/', name: '市售優格', note: `${await count('marketYogurts')} 款市售優格的成分與菌種。` },
 	{ href: 'methods/', name: '製法', note: `${await count('methods')} 種製法的控制點與適用情境。` },
-	{ href: 'glossary/', name: '詞彙', note: `${await count('glossary')} 個常用術語，附英文。` },
+	{ href: 'glossary/', name: '專有名詞', note: `${await count('glossary')} 個常用術語，附英文。` },
 ];
 
 // 最後更新日期＝這次建置的日期（台灣時間）。

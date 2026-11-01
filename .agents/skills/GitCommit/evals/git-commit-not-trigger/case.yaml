@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: git-commit-not-trigger
+expected_outcome: |
+  問 git 觀念，不該叫用 git-commit

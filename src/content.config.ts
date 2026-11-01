@@ -110,6 +110,20 @@ const glossary = defineCollection({
 	}),
 });
 
+// 包裝圖：packImage 是第一張，packImages 是後面幾張（翻頁顯示）。菌粉與市售優格共用。
+const packImageFields = {
+	packImage: z.string().optional(),
+	packCaption: z.string().optional(),
+	packImages: z
+		.array(
+			z.object({
+				src: z.string(),
+				caption: z.string().optional(),
+			}),
+		)
+		.default([]),
+};
+
 const marketYogurts = defineCollection({
 	loader: glob({ base: './src/content/market-yogurts', pattern: '**/*.md' }),
 	schema: z.object({
@@ -130,6 +144,7 @@ const marketYogurts = defineCollection({
 		cultures: z.string(),
 		ingredientsLabel: z.string(),
 		note: z.string().optional(),
+		...packImageFields,
 		sortOrder: z.number().default(100),
 		draft: z.boolean().default(false),
 	}),
@@ -163,16 +178,7 @@ const starterPowders = defineCollection({
 		priceNote: z.string().optional(),
 		reviewTier: z.enum(['web', 'video', 'xhs', 'buyer', 'official', 'none']),
 		review: z.string(),
-		packImage: z.string().optional(),
-		packCaption: z.string().optional(),
-		packImages: z
-			.array(
-				z.object({
-					src: z.string(),
-					caption: z.string().optional(),
-				}),
-			)
-			.default([]),
+		...packImageFields,
 		sortOrder: z.number().default(100),
 		draft: z.boolean().default(false),
 	}),

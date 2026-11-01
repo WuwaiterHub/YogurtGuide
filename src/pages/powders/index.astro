@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import PackShots from '../../components/PackShots.astro';
 
 const powders = (await getCollection('starterPowders', ({ data }) => !data.draft)).sort(
 	(a, b) => a.data.sortOrder - b.data.sortOrder,
@@ -77,8 +78,6 @@ function specLines(data: (typeof powders)[number]['data']) {
 		['發酵時間', data.fermentTime],
 	].filter((line): line is [string, string] => Boolean(line[1]));
 }
-
-const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="菌粉" description="家酪優、BHK、布布優格、川秀、優比特、安琪百鑽、佰生優、普羅拜爾、里仁、喜又美、米森的發酵菌粉：菌種、包裝、標價與評價。">
@@ -112,42 +111,7 @@ const base = import.meta.env.BASE_URL;
 									{group.slug === 'other' && brandNote[data.brandSlug] && (
 										<p class="meta">{brandNote[data.brandSlug]}</p>
 									)}
-									<div class="powder-shots">
-										{packImages(data).length === 0 ? (
-											<figure class="powder-shot powder-shot--empty">
-												<p>本輪未取得包裝圖</p>
-											</figure>
-										) : (
-											<figure class="powder-shot" data-carousel>
-												<div class:list={['powder-book', { 'powder-book--flip': packImages(data).length > 1 }]}>
-													{packImages(data).map((image, index) => (
-														<div class="powder-page" data-caption={image.caption ?? '包裝'}>
-															<img
-																src={`${base}${image.src}`}
-																alt={`${data.brand} ${data.productName} 包裝 ${index + 1}`}
-																loading={index === 0 ? 'lazy' : 'eager'}
-															/>
-														</div>
-													))}
-												</div>
-												<figcaption class="powder-book__caption">
-													<span class="powder-book__label">{packImages(data)[0].caption ?? '包裝'}</span>
-													{packImages(data).length > 1 && (
-														<span class="powder-count">1 / {packImages(data).length}</span>
-													)}
-												</figcaption>
-												{packImages(data).length > 1 && (
-													<>
-														<button class="powder-nav powder-nav--prev" type="button" data-step="-1" aria-label="上一張">
-															‹
-														</button>
-														<button class="powder-nav powder-nav--next" type="button" data-step="1" aria-label="下一張">
-															›
-														</button>
-													</>
-												)}
-											</figure>
-										)}
+									<PackShots images={packImages(data)} alt={`${data.brand} ${data.productName}`} emptyText="本輪未取得包裝圖">
 										{specLines(data).length > 0 && (
 											<figure class="powder-shot">
 												<ul class="powder-spec-list">
@@ -159,7 +123,7 @@ const base = import.meta.env.BASE_URL;
 												</ul>
 											</figure>
 										)}
-									</div>
+									</PackShots>
 									<table class="meta-table">
 										<tbody>
 											<tr>
@@ -186,69 +150,3 @@ const base = import.meta.env.BASE_URL;
 	</section>
 </BaseLayout>
 
-<script>
-	// 多張包裝圖用 StPageFlip 做翻書效果：紙張會捲曲、帶陰影，也能用手指從右下角拖著翻。
-	// 網站與 Android App（WebView）共用；系統設定「減少動態效果」時直接換頁、不播動畫。
-	import { PageFlip } from 'page-flip';
-
-	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-	for (const carousel of document.querySelectorAll<HTMLElement>('[data-carousel]')) {
-		const book = carousel.querySelector<HTMLElement>('.powder-book--flip');
-		if (!book) continue;
-		const pages = [...book.querySelectorAll<HTMLElement>('.powder-page')];
-		const caption = carousel.querySelector('.powder-book__label');
-		const count = carousel.querySelector('.powder-count');
-
-		// 頁面大小和圖片框一樣（3:4，高 11rem）。
-		const height = Math.round(parseFloat(getComputedStyle(document.documentElement).fontSize) * 11);
-		const flipbook = new PageFlip(book, {
-			width: Math.round((height * 3) / 4),
-			height,
-			size: 'fixed',
-			// 不讓套件把外框撐成雙頁寬，維持單頁（直式）顯示。
-			autoSize: false,
-			usePortrait: true,
-			showCover: false,
-			flippingTime: 1400,
-			maxShadowOpacity: 0.7,
-			mobileScrollSupport: true,
-		});
-		flipbook.loadFromHTML(pages);
-
-		// 單頁模式往後翻時，套件會複製目前這頁當「翻起來的紙」。把複本標成紙背，CSS 讓它只透出淡淡的反向印刷。
-		new MutationObserver((records) => {
-			for (const record of records) {
-				for (const node of record.addedNodes) {
-					if (node instanceof HTMLElement && node.classList.contains('powder-page') && !pages.includes(node)) {
-						node.classList.add('powder-page--back');
-					}
-				}
-			}
-		}).observe(book.querySelector('.stf__block') ?? book, { childList: true, subtree: true });
-
-		flipbook.on('flip', (event: { data: number }) => {
-			const index = event.data;
-			if (caption) caption.textContent = pages[index].dataset.caption ?? '包裝';
-			if (count) count.textContent = `${index + 1} / ${pages.length}`;
-		});
-
-		for (const button of carousel.querySelectorAll<HTMLButtonElement>('.powder-nav')) {
-			button.addEventListener('click', () => {
-				const step = Number(button.dataset.step);
-				const current = flipbook.getCurrentPageIndex();
-				const target = (current + step + pages.length) % pages.length;
-				if (reduceMotion.matches) flipbook.turnToPage(target);
-				// 從右下角翻，像用手捏著書角往上翻。
-				else if (step > 0 && target > current) flipbook.flipNext('bottom');
-				else if (step < 0 && target < current) flipbook.flipPrev('bottom');
-				else flipbook.flip(target, 'bottom');
-				// turnToPage 不會觸發 flip 事件，自己更新。
-				if (reduceMotion.matches) {
-					if (caption) caption.textContent = pages[target].dataset.caption ?? '包裝';
-					if (count) count.textContent = `${target + 1} / ${pages.length}`;
-				}
-			});
-		}
-	}
-</script>
