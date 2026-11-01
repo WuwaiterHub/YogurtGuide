@@ -751,6 +751,11 @@ main > .section:first-child > .wrap > .page-title:first-child .en-sub {
 	list-style: none;
 }
 
+/* 市售優格營養標示的各項數字，縮排在「營養標示」標題下。 */
+.powder-spec-list__sub {
+	padding-left: 1em;
+}
+
 .powder-plate {
 	margin: 0;
 	padding: 0;

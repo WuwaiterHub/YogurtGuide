@@ -11,13 +11,22 @@ const others = yogurts.filter((y) => y.data.recommendationStars === 0);
 
 type Yogurt = (typeof yogurts)[number]['data'];
 
-/** 熱量／蛋白質／脂肪／碳水／糖，查不到的寫「—」；全部查不到就寫「沒有營養標示資訊」。 */
-function nutritionLine(data: Yogurt) {
-	const values = [data.energyKcalPer100, data.proteinPer100, data.fatPer100, data.carbPer100, data.sugarPer100];
-	if (values.every((value) => value === undefined)) return '沒有營養標示資訊';
-	const show = (value: number | undefined, unit: string) => (value === undefined ? '—' : `${value} ${unit}`);
-	const basis = data.nutritionBasis === '100ml' ? '100 ml' : '100 g';
-	return `每 ${basis}：熱量 ${show(data.energyKcalPer100, 'kcal')}・蛋白質 ${show(data.proteinPer100, 'g')}・脂肪 ${show(data.fatPer100, 'g')}・碳水 ${show(data.carbPer100, 'g')}・糖 ${show(data.sugarPer100, 'g')}`;
+/** 營養標示標題，例如「營養標示（每 100 g）」。 */
+function nutritionTitle(data: Yogurt) {
+	return `營養標示（每 ${data.nutritionBasis === '100ml' ? '100 ml' : '100 g'}）`;
+}
+
+/** 熱量／蛋白質／脂肪／碳水／糖各一行，查不到的寫「—」；全部查不到就回傳空陣列。 */
+function nutritionLines(data: Yogurt) {
+	const rows: [string, number | undefined, string][] = [
+		['熱量', data.energyKcalPer100, 'kcal'],
+		['蛋白質', data.proteinPer100, 'g'],
+		['脂肪', data.fatPer100, 'g'],
+		['碳水', data.carbPer100, 'g'],
+		['糖', data.sugarPer100, 'g'],
+	];
+	if (rows.every(([, value]) => value === undefined)) return [];
+	return rows.map(([label, value, unit]) => `${label}：${value === undefined ? '—' : `${value} ${unit}`}`);
 }
 
 function packImages(data: Yogurt) {
@@ -79,34 +88,27 @@ function packImages(data: Yogurt) {
 								{data.brand} {data.productName}
 							</h3>
 							<PackShots images={packImages(data)} alt={`${data.brand} ${data.productName}`}>
-								{/* 右邊的框先留空，之後決定放什麼資訊。 */}
-								<figure class="powder-shot" aria-hidden="true" />
+								<figure class="powder-shot">
+									<ul class="powder-spec-list">
+										<li>成分標示：{data.ingredientsLabel}</li>
+										{nutritionLines(data).length === 0 ? (
+											<li>營養標示：沒有營養標示資訊</li>
+										) : (
+											<>
+												<li>{nutritionTitle(data)}</li>
+												{nutritionLines(data).map((line) => (
+													<li class="powder-spec-list__sub">{line}</li>
+												))}
+											</>
+										)}
+									</ul>
+								</figure>
 							</PackShots>
 							<table class="meta-table">
 								<tbody>
 									<tr>
-										<th>成分標示</th>
-										<td>{data.ingredientsLabel}</td>
-									</tr>
-									<tr>
 										<th>菌種</th>
 										<td>{data.cultures}</td>
-									</tr>
-									<tr>
-										<th>乳源</th>
-										<td>{data.milkBaseNote}</td>
-									</tr>
-									<tr>
-										<th>加糖</th>
-										<td>{data.addedSugar ? '有加糖' : '無加糖'}</td>
-									</tr>
-									<tr>
-										<th>營養標示</th>
-										<td>{nutritionLine(data)}</td>
-									</tr>
-									<tr>
-										<th>其它添加物</th>
-										<td>{data.additives}</td>
 									</tr>
 									{data.note && (
 										<tr>
@@ -130,30 +132,27 @@ function packImages(data: Yogurt) {
 								{data.brand} {data.productName}
 							</h3>
 							<PackShots images={packImages(data)} alt={`${data.brand} ${data.productName}`}>
-								{/* 右邊的框先留空，之後決定放什麼資訊。 */}
-								<figure class="powder-shot" aria-hidden="true" />
+								<figure class="powder-shot">
+									<ul class="powder-spec-list">
+										<li>成分標示：{data.ingredientsLabel}</li>
+										{nutritionLines(data).length === 0 ? (
+											<li>營養標示：沒有營養標示資訊</li>
+										) : (
+											<>
+												<li>{nutritionTitle(data)}</li>
+												{nutritionLines(data).map((line) => (
+													<li class="powder-spec-list__sub">{line}</li>
+												))}
+											</>
+										)}
+									</ul>
+								</figure>
 							</PackShots>
 							<table class="meta-table">
 								<tbody>
 									<tr>
-										<th>成分標示</th>
-										<td>{data.ingredientsLabel}</td>
-									</tr>
-									<tr>
 										<th>菌種</th>
 										<td>{data.cultures}</td>
-									</tr>
-									<tr>
-										<th>加糖</th>
-										<td>{data.addedSugar ? '有加糖' : '無加糖'}</td>
-									</tr>
-									<tr>
-										<th>營養標示</th>
-										<td>{nutritionLine(data)}</td>
-									</tr>
-									<tr>
-										<th>其它添加物</th>
-										<td>{data.additives}</td>
 									</tr>
 									{data.note && (
 										<tr>
