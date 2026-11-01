@@ -1,6 +1,6 @@
 ---
-name: "Project/Skill version history definition"
-description: "每次功能變更後更新版本紀錄。版本管理規則已移至 AGENTS.md 自動套用；本 Skill 提供版本號格式範例與觸發提醒。"
+name: version
+description: "Project/Skill version history definition。每次功能變更後更新版本紀錄。版本管理規則已移至 AGENTS.md 自動套用；本 Skill 提供版本號格式範例與觸發提醒。"
 ---
 
 # Version Management — 觸發索引

@@ -1,5 +1,5 @@
 ---
-name: "git-commit"
+name: git-commit
 description: "git commit 工作流：建本地分支、commit 前跑 test:ci、寫結構化 commit 訊息。不自動 push。使用者只說檢查時，跑驗證、不 commit。"
 ---
 

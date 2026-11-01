@@ -3,6 +3,8 @@
 ## v0.12.0 — 2026-10-21
 
 ### Changes
+- CI 的 gitleaks 改用 `gitleaks git`（舊的 `detect` 已不建議使用），checkout 設 `fetch-depth: 0`，改成掃完整歷史，不再只掃最新一個 commit；下載的壓縮檔先用 SHA-256 核對再解開。`ci.yml`、`deploy.yml` 都已改。本機用同版掃過 89 個 commit，沒有發現秘密。
+- 共用 skill 資料夾全部改小寫，並與 `name:` 一致：`CICD`→`cicd`、`GitCommit`→`git-commit`、`Version`→`version`（`name:` 原本是一句說明，改成 `version`）。junction 已重新建立。
 - 菌粉卡片右上角改放規格，菌種移到下方表格，用逗號串成一行。沒有菌名的仍只顯示「沒有菌種資訊」。
 - 包裝圖可放多張（`packImages`），一次只顯示一張，左右箭頭切換。沒有圖時只顯示「本輪未取得包裝圖」，不再多一行「包裝」。App JSON 多一個 `imageUrls`。
 - 菌粉的「規格」只列包裝（每包克數 × 包數）、內容物、發酵溫度、發酵時間，有資料才顯示。原本的 `spec` 說明文字拆成 `packSize`、`contents`、`temperature`、`fermentTime`，來源與通路說明不再出現在頁面與 App JSON。

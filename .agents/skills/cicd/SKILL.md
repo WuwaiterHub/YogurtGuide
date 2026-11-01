@@ -32,10 +32,12 @@ Agent 在使用者說 commit 時，先跑 `test:ci`。不要自己 push。
 
 | 事件 | Workflow | 做什麼 |
 |---|---|---|
-| pull request，或 push 到 main 以外的分支 | `.github/workflows/ci.yml` | `gitleaks detect`，然後 `check:deploy`。不部署。同一分支只留最新的一次 |
-| push 到 `main`，或手動觸發 | `.github/workflows/deploy.yml` | 同樣的 `gitleaks detect` 與 `check:deploy`，通過才部署 |
+| pull request，或 push 到 main 以外的分支 | `.github/workflows/ci.yml` | `gitleaks git`，然後 `check:deploy`。不部署。同一分支只留最新的一次 |
+| push 到 `main`，或手動觸發 | `.github/workflows/deploy.yml` | 同樣的 `gitleaks git` 與 `check:deploy`，通過才部署 |
 
-`gitleaks detect` 只掃描、不對 PR 留言。不要用會留言的 gitleaks action：Dependabot 的 token 不能留言，留言失敗會讓整步失敗。Cloudflare 的建置不跑 gitleaks，只跑 `check:deploy`。
+`gitleaks git` 掃描完整 git 歷史，checkout 要設 `fetch-depth: 0`，否則只掃到最新一個 commit。下載的 gitleaks 壓縮檔用 `sha256sum -c` 核對 release 的雜湊值，升版時一起更新。不要用舊的 `gitleaks detect`。
+
+gitleaks 只掃描、不對 PR 留言。不要用會留言的 gitleaks action：Dependabot 的 token 不能留言，留言失敗會讓整步失敗。Cloudflare 的建置不跑 gitleaks，只跑 `check:deploy`。
 
 `main` 不跑 `ci.yml`（`branches-ignore: [main]`）。部署前的檢查在 `deploy.yml` 再做一次。
 
